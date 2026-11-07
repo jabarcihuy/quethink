@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" fill="none">
+<title>Attendance confirmation</title>
+<rect x="34" y="22" width="92" height="118" rx="10" fill="#FFFFFF" stroke="#24243A" stroke-width="3"/>
+<path d="M54 18h52v17H54Z" fill="#F6D2B2" stroke="#24243A" stroke-width="3" stroke-linejoin="round"/>
+<path d="M19 64V49a8 8 0 0 1 8-8h15M118 41h15a8 8 0 0 1 8 8v15M141 106v15a8 8 0 0 1-8 8h-15M42 129H27a8 8 0 0 1-8-8v-15" stroke="#5145CD" stroke-width="6" stroke-linecap="round"/>
+<circle cx="80" cy="79" r="26" fill="#E2F3EB" stroke="#176B61" stroke-width="3"/>
+<path d="m67 79 9 9 18-20" stroke="#176B61" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M61 118h38" stroke="#5145CD" stroke-width="3" stroke-linecap="round"/>
+</svg>

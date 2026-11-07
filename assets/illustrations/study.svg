@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" fill="none">
+<title>Connected database tables</title>
+<path d="M73 52h20a12 12 0 0 1 12 12v26" stroke="#F6D2B2" stroke-width="5" stroke-linecap="round"/>
+<circle cx="73" cy="52" r="5" fill="#F6D2B2"/><circle cx="105" cy="90" r="5" fill="#F6D2B2"/>
+<rect x="13" y="20" width="66" height="82" rx="9" fill="#EEEAFF" stroke="#24243A" stroke-width="3"/>
+<path d="M13 29a9 9 0 0 1 9-9h48a9 9 0 0 1 9 9v15H13Z" fill="#5145CD"/>
+<circle cx="25" cy="32" r="3" fill="#F6D2B2"/><path d="M37 32h28" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round"/>
+<path d="M13 62h66M13 80h66M35 44v58" stroke="#5145CD" stroke-width="2"/>
+<path d="M23 53h3M23 71h3M23 89h3M46 53h21M46 71h15M46 89h18" stroke="#5145CD" stroke-width="3" stroke-linecap="round"/>
+<rect x="82" y="91" width="65" height="54" rx="9" fill="#E2F3EB" stroke="#24243A" stroke-width="3"/>
+<path d="M82 100a9 9 0 0 1 9-9h47a9 9 0 0 1 9 9v13H82Z" fill="#176B61"/>
+<path d="M94 102h37M94 124h12M117 124h17M94 135h12M117 135h13" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round"/>
+<path d="M94 124h12M117 124h17M94 135h12M117 135h13" stroke="#176B61" stroke-width="3" stroke-linecap="round"/>
+</svg>

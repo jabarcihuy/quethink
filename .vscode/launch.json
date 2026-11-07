@@ -1,0 +1,12 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Start Quethink Metro",
+      "request": "launch",
+      "type": "node-terminal",
+      "command": "npm start",
+      "cwd": "${workspaceFolder}"
+    }
+  ]
+}

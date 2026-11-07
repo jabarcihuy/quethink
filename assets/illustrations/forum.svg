@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" fill="none">
+<title>Class discussion</title>
+<path d="M26 24h79a11 11 0 0 1 11 11v51a11 11 0 0 1-11 11H50l-24 18V97a11 11 0 0 1-11-11V35a11 11 0 0 1 11-11Z" fill="#F6D2B2" stroke="#24243A" stroke-width="3" stroke-linejoin="round"/>
+<path d="M35 47h60M35 61h43" stroke="#6E4021" stroke-width="4" stroke-linecap="round"/>
+<path d="M78 76h56a10 10 0 0 1 10 10v37a10 10 0 0 1-10 10v15l-19-15H78a10 10 0 0 1-10-10V86a10 10 0 0 1 10-10Z" fill="#E2F3EB" stroke="#24243A" stroke-width="3" stroke-linejoin="round"/>
+<circle cx="90" cy="105" r="4" fill="#176B61"/><circle cx="106" cy="105" r="4" fill="#176B61"/><circle cx="122" cy="105" r="4" fill="#176B61"/>
+</svg>

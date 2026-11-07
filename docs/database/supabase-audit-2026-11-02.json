@@ -1,0 +1,4366 @@
+{
+  "captured_at": "2026-11-02",
+  "project_ref": "dadjfyjvalnaqqrmqpfa",
+  "scope": "Read-only schema/catalog inspection; no user rows or credentials included. Table metadata row estimates are not exact.",
+  "metadata": [
+    {
+      "database_name": "postgres",
+      "postgres_version": "17.6",
+      "postgrest_db_schemas": null,
+      "public_policy_count": 15
+    }
+  ],
+  "tables": [
+    {
+      "name": "public.profiles",
+      "rls_enabled": true,
+      "rows": 0,
+      "columns": [
+        {
+          "name": "id",
+          "data_type": "uuid",
+          "format": "uuid",
+          "options": [
+            "updatable"
+          ]
+        },
+        {
+          "name": "role",
+          "data_type": "USER-DEFINED",
+          "format": "app_role",
+          "options": [
+            "updatable"
+          ],
+          "default_value": "'USER'::app_role",
+          "enums": [
+            "USER",
+            "ADMIN"
+          ]
+        },
+        {
+          "name": "display_name",
+          "data_type": "text",
+          "format": "text",
+          "options": [
+            "nullable",
+            "updatable"
+          ]
+        },
+        {
+          "name": "created_at",
+          "data_type": "timestamp with time zone",
+          "format": "timestamptz",
+          "options": [
+            "updatable"
+          ],
+          "default_value": "now()"
+        },
+        {
+          "name": "updated_at",
+          "data_type": "timestamp with time zone",
+          "format": "timestamptz",
+          "options": [
+            "updatable"
+          ],
+          "default_value": "now()"
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ],
+      "foreign_key_constraints": [
+        {
+          "name": "forum_topics_author_id_fkey",
+          "source_table": "public.forum_topics",
+          "source_columns": [
+            "author_id"
+          ],
+          "target_table": "public.profiles",
+          "target_columns": [
+            "id"
+          ]
+        },
+        {
+          "name": "profiles_id_fkey",
+          "source_table": "public.profiles",
+          "source_columns": [
+            "id"
+          ],
+          "target_table": "auth.users",
+          "target_columns": [
+            "id"
+          ]
+        },
+        {
+          "name": "forum_replies_author_id_fkey",
+          "source_table": "public.forum_replies",
+          "source_columns": [
+            "author_id"
+          ],
+          "target_table": "public.profiles",
+          "target_columns": [
+            "id"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "public.learning_paths",
+      "rls_enabled": true,
+      "rows": 0,
+      "columns": [
+        {
+          "name": "id",
+          "data_type": "uuid",
+          "format": "uuid",
+          "options": [
+            "updatable"
+          ],
+          "default_value": "gen_random_uuid()"
+        },
+        {
+          "name": "slug",
+          "data_type": "text",
+          "format": "text",
+          "options": [
+            "updatable",
+            "unique"
+          ],
+          "check": "slug ~ '^[a-z0-9]+(?:-[a-z0-9]+)*$'::text"
+        },
+        {
+          "name": "title",
+          "data_type": "text",
+          "format": "text",
+          "options": [
+            "updatable"
+          ]
+        },
+        {
+          "name": "description",
+          "data_type": "text",
+          "format": "text",
+          "options": [
+            "updatable"
+          ],
+          "default_value": "''::text"
+        },
+        {
+          "name": "is_published",
+          "data_type": "boolean",
+          "format": "bool",
+          "options": [
+            "updatable"
+          ],
+          "default_value": "false"
+        },
+        {
+          "name": "created_at",
+          "data_type": "timestamp with time zone",
+          "format": "timestamptz",
+          "options": [
+            "updatable"
+          ],
+          "default_value": "now()"
+        },
+        {
+          "name": "updated_at",
+          "data_type": "timestamp with time zone",
+          "format": "timestamptz",
+          "options": [
+            "updatable"
+          ],
+          "default_value": "now()"
+        },
+        {
+          "name": "position",
+          "data_type": "integer",
+          "format": "int4",
+          "options": [
+            "updatable"
+          ],
+          "default_value": "1"
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ],
+      "foreign_key_constraints": [
+        {
+          "name": "assessments_learning_path_id_fkey",
+          "source_table": "public.assessments",
+          "source_columns": [
+            "learning_path_id"
+          ],
+          "target_table": "public.learning_paths",
+          "target_columns": [
+            "id"
+          ]
+        },
+        {
+          "name": "chapters_learning_path_id_fkey",
+          "source_table": "public.chapters",
+          "source_columns": [
+            "learning_path_id"
+          ],
+          "target_table": "public.learning_paths",
+          "target_columns": [
+            "id"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "public.chapters",
+      "rls_enabled": true,
+      "rows": 0,
+      "columns": [
+        {
+          "name": "id",
+          "data_type": "uuid",
+          "format": "uuid",
+          "options": [
+            "updatable"
+          ],
+          "default_value": "gen_random_uuid()"
+        },
+        {
+          "name": "learning_path_id",
+          "data_type": "uuid",
+          "format": "uuid",
+          "options": [
+            "updatable"
+          ]
+        },
+        {
+          "name": "title",
+          "data_type": "text",
+          "format": "text",
+          "options": [
+            "updatable"
+          ]
+        },
+        {
+          "name": "description",
+          "data_type": "text",
+          "format": "text",
+          "options": [
+            "updatable"
+          ],
+          "default_value": "''::text"
+        },
+        {
+          "name": "position",
+          "data_type": "integer",
+          "format": "int4",
+          "options": [
+            "updatable"
+          ],
+          "check": "\"position\" > 0"
+        },
+        {
+          "name": "is_required",
+          "data_type": "boolean",
+          "format": "bool",
+          "options": [
+            "updatable"
+          ],
+          "default_value": "true"
+        },
+        {
+          "name": "is_published",
+          "data_type": "boolean",
+          "format": "bool",
+          "options": [
+            "updatable"
+          ],
+          "default_value": "false"
+        },
+        {
+          "name": "created_at",
+          "data_type": "timestamp with time zone",
+          "format": "timestamptz",
+          "options": [
+            "updatable"
+          ],
+          "default_value": "now()"
+        },
+        {
+          "name": "updated_at",
+          "data_type": "timestamp with time zone",
+          "format": "timestamptz",
+          "options": [
+            "updatable"
+          ],
+          "default_value": "now()"
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ],
+      "foreign_key_constraints": [
+        {
+          "name": "chapters_learning_path_id_fkey",
+          "source_table": "public.chapters",
+          "source_columns": [
+            "learning_path_id"
+          ],
+          "target_table": "public.learning_paths",
+          "target_columns": [
+            "id"
+          ]
+        },
+        {
+          "name": "lessons_chapter_id_fkey",
+          "source_table": "public.lessons",
+          "source_columns": [
+            "chapter_id"
+          ],
+          "target_table": "public.chapters",
+          "target_columns": [
+            "id"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "public.lessons",
+      "rls_enabled": true,
+      "rows": 0,
+      "columns": [
+        {
+          "name": "id",
+          "data_type": "uuid",
+          "format": "uuid",
+          "options": [
+            "updatable"
+          ],
+          "default_value": "gen_random_uuid()"
+        },
+        {
+          "name": "chapter_id",
+          "data_type": "uuid",
+          "format": "uuid",
+          "options": [
+            "updatable"
+          ]
+        },
+        {
+          "name": "title",
+          "data_type": "text",
+          "format": "text",
+          "options": [
+            "updatable"
+          ]
+        },
+        {
+          "name": "slug",
+          "data_type": "text",
+          "format": "text",
+          "options": [
+            "updatable",
+            "unique"
+          ],
+          "check": "slug ~ '^[a-z0-9]+(?:-[a-z0-9]+)*$'::text"
+        },
+        {
+          "name": "summary",
+          "data_type": "text",
+          "format": "text",
+          "options": [
+            "updatable"
+          ],
+          "default_value": "''::text"
+        },
+        {
+          "name": "content",
+          "data_type": "text",
+          "format": "text",
+          "options": [
+            "updatable"
+          ],
+          "default_value": "''::text"
+        },
+        {
+          "name": "position",
+          "data_type": "integer",
+          "format": "int4",
+          "options": [
+            "updatable"
+          ],
+          "check": "\"position\" > 0"
+        },
+        {
+          "name": "is_required",
+          "data_type": "boolean",
+          "format": "bool",
+          "options": [
+            "updatable"
+          ],
+          "default_value": "true"
+        },
+        {
+          "name": "is_preview",
+          "data_type": "boolean",
+          "format": "bool",
+          "options": [
+            "updatable"
+          ],
+          "default_value": "false"
+        },
+        {
+          "name": "is_published",
+          "data_type": "boolean",
+          "format": "bool",
+          "options": [
+            "updatable"
+          ],
+          "default_value": "false"
+        },
+        {
+          "name": "created_at",
+          "data_type": "timestamp with time zone",
+          "format": "timestamptz",
+          "options": [
+            "updatable"
+          ],
+          "default_value": "now()"
+        },
+        {
+          "name": "updated_at",
+          "data_type": "timestamp with time zone",
+          "format": "timestamptz",
+          "options": [
+            "updatable"
+          ],
+          "default_value": "now()"
+        },
+        {
+          "name": "example_source_code",
+          "data_type": "text",
+          "format": "text",
+          "options": [
+            "nullable",
+            "updatable"
+          ]
+        },
+        {
+          "name": "example_sql",
+          "data_type": "text",
+          "format": "text",
+          "options": [
+            "nullable",
+            "updatable"
+          ],
+          "check": "example_sql IS NULL OR length(example_sql) <= 4096"
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ],
+      "foreign_key_constraints": [
+        {
+          "name": "lesson_progress_lesson_id_fkey",
+          "source_table": "public.lesson_progress",
+          "source_columns": [
+            "lesson_id"
+          ],
+          "target_table": "public.lessons",
+          "target_columns": [
+            "id"
+          ]
+        },
+        {
+          "name": "lessons_chapter_id_fkey",
+          "source_table": "public.lessons",
+          "source_columns": [
+            "chapter_id"
+          ],
+          "target_table": "public.chapters",
+          "target_columns": [
+            "id"
+          ]
+        },
+        {
+          "name": "exercises_lesson_id_fkey",
+          "source_table": "public.exercises",
+          "source_columns": [
+            "lesson_id"
+          ],
+          "target_table": "public.lessons",
+          "target_columns": [
+            "id"
+          ]
+        },
+        {
+          "name": "ai_sessions_lesson_id_fkey",
+          "source_table": "public.ai_sessions",
+          "source_columns": [
+            "lesson_id"
+          ],
+          "target_table": "public.lessons",
+          "target_columns": [
+            "id"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "public.lesson_progress",
+      "rls_enabled": true,
+      "rows": 0,
+      "columns": [
+        {
+          "name": "id",
+          "data_type": "uuid",
+          "format": "uuid",
+          "options": [
+            "updatable"
+          ],
+          "default_value": "gen_random_uuid()"
+        },
+        {
+          "name": "user_id",
+          "data_type": "uuid",
+          "format": "uuid",
+          "options": [
+            "updatable"
+          ]
+        },
+        {
+          "name": "lesson_id",
+          "data_type": "uuid",
+          "format": "uuid",
+          "options": [
+            "updatable"
+          ]
+        },
+        {
+          "name": "status",
+          "data_type": "USER-DEFINED",
+          "format": "lesson_progress_status",
+          "options": [
+            "updatable"
+          ],
+          "default_value": "'IN_PROGRESS'::lesson_progress_status",
+          "enums": [
+            "LOCKED",
+            "AVAILABLE",
+            "IN_PROGRESS",
+            "COMPLETED"
+          ],
+          "check": "status = ANY (ARRAY['IN_PROGRESS'::lesson_progress_status, 'COMPLETED'::lesson_progress_status])"
+        },
+        {
+          "name": "started_at",
+          "data_type": "timestamp with time zone",
+          "format": "timestamptz",
+          "options": [
+            "updatable"
+          ],
+          "default_value": "now()"
+        },
+        {
+          "name": "completed_at",
+          "data_type": "timestamp with time zone",
+          "format": "timestamptz",
+          "options": [
+            "nullable",
+            "updatable"
+          ]
+        },
+        {
+          "name": "read_at",
+          "data_type": "timestamp with time zone",
+          "format": "timestamptz",
+          "options": [
+            "nullable",
+            "updatable"
+          ]
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ],
+      "foreign_key_constraints": [
+        {
+          "name": "lesson_progress_user_id_fkey",
+          "source_table": "public.lesson_progress",
+          "source_columns": [
+            "user_id"
+          ],
+          "target_table": "auth.users",
+          "target_columns": [
+            "id"
+          ]
+        },
+        {
+          "name": "lesson_progress_lesson_id_fkey",
+          "source_table": "public.lesson_progress",
+          "source_columns": [
+            "lesson_id"
+          ],
+          "target_table": "public.lessons",
+          "target_columns": [
+            "id"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "public.code_request_limits",
+      "rls_enabled": true,
+      "rows": 0,
+      "columns": [
+        {
+          "name": "user_id",
+          "data_type": "uuid",
+          "format": "uuid",
+          "options": [
+            "updatable"
+          ]
+        },
+        {
+          "name": "kind",
+          "data_type": "text",
+          "format": "text",
+          "options": [
+            "updatable"
+          ],
+          "check": "kind = ANY (ARRAY['check'::text, 'ai'::text, 'assessment'::text])"
+        },
+        {
+          "name": "window_started_at",
+          "data_type": "timestamp with time zone",
+          "format": "timestamptz",
+          "options": [
+            "updatable"
+          ]
+        },
+        {
+          "name": "request_count",
+          "data_type": "integer",
+          "format": "int4",
+          "options": [
+            "updatable"
+          ],
+          "check": "request_count > 0"
+        }
+      ],
+      "primary_keys": [
+        "user_id",
+        "kind"
+      ],
+      "foreign_key_constraints": [
+        {
+          "name": "code_request_limits_user_id_fkey",
+          "source_table": "public.code_request_limits",
+          "source_columns": [
+            "user_id"
+          ],
+          "target_table": "auth.users",
+          "target_columns": [
+            "id"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "public.exercises",
+      "rls_enabled": true,
+      "rows": 0,
+      "columns": [
+        {
+          "name": "id",
+          "data_type": "uuid",
+          "format": "uuid",
+          "options": [
+            "updatable"
+          ],
+          "default_value": "gen_random_uuid()"
+        },
+        {
+          "name": "lesson_id",
+          "data_type": "uuid",
+          "format": "uuid",
+          "options": [
+            "updatable"
+          ]
+        },
+        {
+          "name": "type",
+          "data_type": "USER-DEFINED",
+          "format": "exercise_type",
+          "options": [
+            "updatable"
+          ],
+          "enums": [
+            "CODE_COMPLETION",
+            "PREDICT_OUTPUT",
+            "DEBUGGING",
+            "PROBLEM_SOLVING",
+            "PSEUDOCODE",
+            "FLOWCHART"
+          ]
+        },
+        {
+          "name": "title",
+          "data_type": "text",
+          "format": "text",
+          "options": [
+            "updatable"
+          ]
+        },
+        {
+          "name": "prompt",
+          "data_type": "text",
+          "format": "text",
+          "options": [
+            "updatable"
+          ]
+        },
+        {
+          "name": "starter_code",
+          "data_type": "text",
+          "format": "text",
+          "options": [
+            "nullable",
+            "updatable"
+          ]
+        },
+        {
+          "name": "solution_code",
+          "data_type": "text",
+          "format": "text",
+          "options": [
+            "nullable",
+            "updatable"
+          ]
+        },
+        {
+          "name": "config",
+          "data_type": "jsonb",
+          "format": "jsonb",
+          "options": [
+            "updatable"
+          ],
+          "default_value": "'{}'::jsonb",
+          "check": "jsonb_typeof(config) = 'object'::text"
+        },
+        {
+          "name": "position",
+          "data_type": "integer",
+          "format": "int4",
+          "options": [
+            "updatable"
+          ],
+          "check": "\"position\" > 0"
+        },
+        {
+          "name": "is_required",
+          "data_type": "boolean",
+          "format": "bool",
+          "options": [
+            "updatable"
+          ],
+          "default_value": "true"
+        },
+        {
+          "name": "is_published",
+          "data_type": "boolean",
+          "format": "bool",
+          "options": [
+            "updatable"
+          ],
+          "default_value": "false"
+        },
+        {
+          "name": "created_at",
+          "data_type": "timestamp with time zone",
+          "format": "timestamptz",
+          "options": [
+            "updatable"
+          ],
+          "default_value": "now()"
+        },
+        {
+          "name": "updated_at",
+          "data_type": "timestamp with time zone",
+          "format": "timestamptz",
+          "options": [
+            "updatable"
+          ],
+          "default_value": "now()"
+        },
+        {
+          "name": "public_config",
+          "data_type": "jsonb",
+          "format": "jsonb",
+          "options": [
+            "generated",
+            "nullable",
+            "updatable"
+          ],
+          "default_value": "(config -> 'public'::text)"
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ],
+      "foreign_key_constraints": [
+        {
+          "name": "test_cases_exercise_id_fkey",
+          "source_table": "public.test_cases",
+          "source_columns": [
+            "exercise_id"
+          ],
+          "target_table": "public.exercises",
+          "target_columns": [
+            "id"
+          ]
+        },
+        {
+          "name": "ai_sessions_exercise_id_fkey",
+          "source_table": "public.ai_sessions",
+          "source_columns": [
+            "exercise_id"
+          ],
+          "target_table": "public.exercises",
+          "target_columns": [
+            "id"
+          ]
+        },
+        {
+          "name": "exercises_lesson_id_fkey",
+          "source_table": "public.exercises",
+          "source_columns": [
+            "lesson_id"
+          ],
+          "target_table": "public.lessons",
+          "target_columns": [
+            "id"
+          ]
+        },
+        {
+          "name": "exercise_attempts_exercise_id_fkey",
+          "source_table": "public.exercise_attempts",
+          "source_columns": [
+            "exercise_id"
+          ],
+          "target_table": "public.exercises",
+          "target_columns": [
+            "id"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "public.test_cases",
+      "rls_enabled": true,
+      "rows": 0,
+      "columns": [
+        {
+          "name": "id",
+          "data_type": "uuid",
+          "format": "uuid",
+          "options": [
+            "updatable"
+          ],
+          "default_value": "gen_random_uuid()"
+        },
+        {
+          "name": "exercise_id",
+          "data_type": "uuid",
+          "format": "uuid",
+          "options": [
+            "updatable"
+          ]
+        },
+        {
+          "name": "stdin",
+          "data_type": "text",
+          "format": "text",
+          "options": [
+            "nullable",
+            "updatable"
+          ]
+        },
+        {
+          "name": "expected_output",
+          "data_type": "text",
+          "format": "text",
+          "options": [
+            "nullable",
+            "updatable"
+          ]
+        },
+        {
+          "name": "is_hidden",
+          "data_type": "boolean",
+          "format": "bool",
+          "options": [
+            "updatable"
+          ],
+          "default_value": "false"
+        },
+        {
+          "name": "weight",
+          "data_type": "numeric",
+          "format": "numeric",
+          "options": [
+            "updatable"
+          ],
+          "default_value": "1",
+          "check": "weight > 0::numeric"
+        },
+        {
+          "name": "position",
+          "data_type": "integer",
+          "format": "int4",
+          "options": [
+            "updatable"
+          ],
+          "check": "\"position\" > 0"
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ],
+      "foreign_key_constraints": [
+        {
+          "name": "test_cases_exercise_id_fkey",
+          "source_table": "public.test_cases",
+          "source_columns": [
+            "exercise_id"
+          ],
+          "target_table": "public.exercises",
+          "target_columns": [
+            "id"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "public.exercise_attempts",
+      "rls_enabled": true,
+      "rows": 0,
+      "columns": [
+        {
+          "name": "id",
+          "data_type": "uuid",
+          "format": "uuid",
+          "options": [
+            "updatable"
+          ],
+          "default_value": "gen_random_uuid()"
+        },
+        {
+          "name": "user_id",
+          "data_type": "uuid",
+          "format": "uuid",
+          "options": [
+            "updatable"
+          ]
+        },
+        {
+          "name": "exercise_id",
+          "data_type": "uuid",
+          "format": "uuid",
+          "options": [
+            "updatable"
+          ]
+        },
+        {
+          "name": "source_code",
+          "data_type": "text",
+          "format": "text",
+          "options": [
+            "nullable",
+            "updatable"
+          ],
+          "check": "source_code IS NULL OR length(source_code) <= 16000"
+        },
+        {
+          "name": "answer",
+          "data_type": "jsonb",
+          "format": "jsonb",
+          "options": [
+            "nullable",
+            "updatable"
+          ]
+        },
+        {
+          "name": "score",
+          "data_type": "numeric",
+          "format": "numeric",
+          "options": [
+            "updatable"
+          ],
+          "check": "score >= 0::numeric AND score <= 100::numeric"
+        },
+        {
+          "name": "passed",
+          "data_type": "boolean",
+          "format": "bool",
+          "options": [
+            "updatable"
+          ]
+        },
+        {
+          "name": "feedback",
+          "data_type": "jsonb",
+          "format": "jsonb",
+          "options": [
+            "updatable"
+          ],
+          "default_value": "'{}'::jsonb"
+        },
+        {
+          "name": "created_at",
+          "data_type": "timestamp with time zone",
+          "format": "timestamptz",
+          "options": [
+            "updatable"
+          ],
+          "default_value": "now()"
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ],
+      "foreign_key_constraints": [
+        {
+          "name": "exercise_attempts_exercise_id_fkey",
+          "source_table": "public.exercise_attempts",
+          "source_columns": [
+            "exercise_id"
+          ],
+          "target_table": "public.exercises",
+          "target_columns": [
+            "id"
+          ]
+        },
+        {
+          "name": "exercise_attempts_user_id_fkey",
+          "source_table": "public.exercise_attempts",
+          "source_columns": [
+            "user_id"
+          ],
+          "target_table": "auth.users",
+          "target_columns": [
+            "id"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "public.ai_sessions",
+      "rls_enabled": true,
+      "rows": 0,
+      "columns": [
+        {
+          "name": "id",
+          "data_type": "uuid",
+          "format": "uuid",
+          "options": [
+            "updatable"
+          ],
+          "default_value": "gen_random_uuid()"
+        },
+        {
+          "name": "user_id",
+          "data_type": "uuid",
+          "format": "uuid",
+          "options": [
+            "updatable"
+          ]
+        },
+        {
+          "name": "lesson_id",
+          "data_type": "uuid",
+          "format": "uuid",
+          "options": [
+            "updatable"
+          ]
+        },
+        {
+          "name": "exercise_id",
+          "data_type": "uuid",
+          "format": "uuid",
+          "options": [
+            "nullable",
+            "updatable"
+          ]
+        },
+        {
+          "name": "created_at",
+          "data_type": "timestamp with time zone",
+          "format": "timestamptz",
+          "options": [
+            "updatable"
+          ],
+          "default_value": "now()"
+        },
+        {
+          "name": "updated_at",
+          "data_type": "timestamp with time zone",
+          "format": "timestamptz",
+          "options": [
+            "updatable"
+          ],
+          "default_value": "now()"
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ],
+      "foreign_key_constraints": [
+        {
+          "name": "ai_sessions_user_id_fkey",
+          "source_table": "public.ai_sessions",
+          "source_columns": [
+            "user_id"
+          ],
+          "target_table": "auth.users",
+          "target_columns": [
+            "id"
+          ]
+        },
+        {
+          "name": "ai_sessions_lesson_id_fkey",
+          "source_table": "public.ai_sessions",
+          "source_columns": [
+            "lesson_id"
+          ],
+          "target_table": "public.lessons",
+          "target_columns": [
+            "id"
+          ]
+        },
+        {
+          "name": "ai_sessions_exercise_id_fkey",
+          "source_table": "public.ai_sessions",
+          "source_columns": [
+            "exercise_id"
+          ],
+          "target_table": "public.exercises",
+          "target_columns": [
+            "id"
+          ]
+        },
+        {
+          "name": "ai_messages_session_id_fkey",
+          "source_table": "public.ai_messages",
+          "source_columns": [
+            "session_id"
+          ],
+          "target_table": "public.ai_sessions",
+          "target_columns": [
+            "id"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "public.ai_messages",
+      "rls_enabled": true,
+      "rows": 0,
+      "columns": [
+        {
+          "name": "id",
+          "data_type": "uuid",
+          "format": "uuid",
+          "options": [
+            "updatable"
+          ],
+          "default_value": "gen_random_uuid()"
+        },
+        {
+          "name": "session_id",
+          "data_type": "uuid",
+          "format": "uuid",
+          "options": [
+            "updatable"
+          ]
+        },
+        {
+          "name": "role",
+          "data_type": "text",
+          "format": "text",
+          "options": [
+            "updatable"
+          ],
+          "check": "role = ANY (ARRAY['USER'::text, 'ASSISTANT'::text])"
+        },
+        {
+          "name": "content",
+          "data_type": "text",
+          "format": "text",
+          "options": [
+            "updatable"
+          ],
+          "check": "length(content) >= 1 AND length(content) <= 8000"
+        },
+        {
+          "name": "metadata",
+          "data_type": "jsonb",
+          "format": "jsonb",
+          "options": [
+            "updatable"
+          ],
+          "default_value": "'{}'::jsonb",
+          "check": "jsonb_typeof(metadata) = 'object'::text"
+        },
+        {
+          "name": "created_at",
+          "data_type": "timestamp with time zone",
+          "format": "timestamptz",
+          "options": [
+            "updatable"
+          ],
+          "default_value": "now()"
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ],
+      "foreign_key_constraints": [
+        {
+          "name": "ai_messages_session_id_fkey",
+          "source_table": "public.ai_messages",
+          "source_columns": [
+            "session_id"
+          ],
+          "target_table": "public.ai_sessions",
+          "target_columns": [
+            "id"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "public.assessments",
+      "rls_enabled": true,
+      "rows": 0,
+      "columns": [
+        {
+          "name": "id",
+          "data_type": "uuid",
+          "format": "uuid",
+          "options": [
+            "updatable"
+          ],
+          "default_value": "gen_random_uuid()"
+        },
+        {
+          "name": "learning_path_id",
+          "data_type": "uuid",
+          "format": "uuid",
+          "options": [
+            "updatable"
+          ]
+        },
+        {
+          "name": "slug",
+          "data_type": "text",
+          "format": "text",
+          "options": [
+            "updatable"
+          ],
+          "check": "slug ~ '^[a-z0-9]+(?:-[a-z0-9]+)*$'::text"
+        },
+        {
+          "name": "title",
+          "data_type": "text",
+          "format": "text",
+          "options": [
+            "updatable"
+          ]
+        },
+        {
+          "name": "instructions",
+          "data_type": "text",
+          "format": "text",
+          "options": [
+            "updatable"
+          ],
+          "default_value": "''::text"
+        },
+        {
+          "name": "type",
+          "data_type": "USER-DEFINED",
+          "format": "assessment_type",
+          "options": [
+            "updatable"
+          ],
+          "enums": [
+            "CHECKPOINT",
+            "FINAL",
+            "PRETEST"
+          ]
+        },
+        {
+          "name": "gate_after_chapter",
+          "data_type": "integer",
+          "format": "int4",
+          "options": [
+            "updatable"
+          ],
+          "check": "gate_after_chapter >= 1 AND gate_after_chapter <= 10"
+        },
+        {
+          "name": "passing_score",
+          "data_type": "numeric",
+          "format": "numeric",
+          "options": [
+            "updatable"
+          ],
+          "default_value": "75",
+          "check": "passing_score >= 0::numeric AND passing_score <= 100::numeric"
+        },
+        {
+          "name": "position",
+          "data_type": "integer",
+          "format": "int4",
+          "options": [
+            "updatable"
+          ],
+          "check": "\"position\" > 0"
+        },
+        {
+          "name": "is_published",
+          "data_type": "boolean",
+          "format": "bool",
+          "options": [
+            "updatable"
+          ],
+          "default_value": "false"
+        },
+        {
+          "name": "created_at",
+          "data_type": "timestamp with time zone",
+          "format": "timestamptz",
+          "options": [
+            "updatable"
+          ],
+          "default_value": "now()"
+        },
+        {
+          "name": "updated_at",
+          "data_type": "timestamp with time zone",
+          "format": "timestamptz",
+          "options": [
+            "updatable"
+          ],
+          "default_value": "now()"
+        },
+        {
+          "name": "course_weight_percent",
+          "data_type": "numeric",
+          "format": "numeric",
+          "options": [
+            "updatable"
+          ],
+          "default_value": "0",
+          "check": "course_weight_percent >= 0::numeric AND course_weight_percent <= 100::numeric"
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ],
+      "foreign_key_constraints": [
+        {
+          "name": "assessment_sessions_assessment_id_fkey",
+          "source_table": "public.assessment_sessions",
+          "source_columns": [
+            "assessment_id"
+          ],
+          "target_table": "public.assessments",
+          "target_columns": [
+            "id"
+          ]
+        },
+        {
+          "name": "assessments_learning_path_id_fkey",
+          "source_table": "public.assessments",
+          "source_columns": [
+            "learning_path_id"
+          ],
+          "target_table": "public.learning_paths",
+          "target_columns": [
+            "id"
+          ]
+        },
+        {
+          "name": "assessment_items_assessment_id_fkey",
+          "source_table": "public.assessment_items",
+          "source_columns": [
+            "assessment_id"
+          ],
+          "target_table": "public.assessments",
+          "target_columns": [
+            "id"
+          ]
+        },
+        {
+          "name": "assessment_results_assessment_id_fkey",
+          "source_table": "public.assessment_results",
+          "source_columns": [
+            "assessment_id"
+          ],
+          "target_table": "public.assessments",
+          "target_columns": [
+            "id"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "public.assessment_items",
+      "rls_enabled": true,
+      "rows": 0,
+      "columns": [
+        {
+          "name": "id",
+          "data_type": "uuid",
+          "format": "uuid",
+          "options": [
+            "updatable"
+          ],
+          "default_value": "gen_random_uuid()"
+        },
+        {
+          "name": "assessment_id",
+          "data_type": "uuid",
+          "format": "uuid",
+          "options": [
+            "updatable"
+          ]
+        },
+        {
+          "name": "type",
+          "data_type": "USER-DEFINED",
+          "format": "exercise_type",
+          "options": [
+            "updatable"
+          ],
+          "enums": [
+            "CODE_COMPLETION",
+            "PREDICT_OUTPUT",
+            "DEBUGGING",
+            "PROBLEM_SOLVING",
+            "PSEUDOCODE",
+            "FLOWCHART"
+          ]
+        },
+        {
+          "name": "title",
+          "data_type": "text",
+          "format": "text",
+          "options": [
+            "updatable"
+          ]
+        },
+        {
+          "name": "topic",
+          "data_type": "text",
+          "format": "text",
+          "options": [
+            "updatable"
+          ]
+        },
+        {
+          "name": "prompt",
+          "data_type": "text",
+          "format": "text",
+          "options": [
+            "updatable"
+          ]
+        },
+        {
+          "name": "starter_code",
+          "data_type": "text",
+          "format": "text",
+          "options": [
+            "nullable",
+            "updatable"
+          ]
+        },
+        {
+          "name": "public_config",
+          "data_type": "jsonb",
+          "format": "jsonb",
+          "options": [
+            "updatable"
+          ],
+          "default_value": "'{}'::jsonb",
+          "check": "jsonb_typeof(public_config) = 'object'::text"
+        },
+        {
+          "name": "answer_config",
+          "data_type": "jsonb",
+          "format": "jsonb",
+          "options": [
+            "updatable"
+          ],
+          "default_value": "'{}'::jsonb",
+          "check": "jsonb_typeof(answer_config) = 'object'::text"
+        },
+        {
+          "name": "entry_function",
+          "data_type": "text",
+          "format": "text",
+          "options": [
+            "nullable",
+            "updatable"
+          ],
+          "check": "entry_function IS NULL OR entry_function ~ '^[A-Za-z_$][A-Za-z0-9_$]{0,63}$'::text"
+        },
+        {
+          "name": "weight",
+          "data_type": "numeric",
+          "format": "numeric",
+          "options": [
+            "updatable"
+          ],
+          "default_value": "1",
+          "check": "weight > 0::numeric"
+        },
+        {
+          "name": "position",
+          "data_type": "integer",
+          "format": "int4",
+          "options": [
+            "updatable"
+          ],
+          "check": "\"position\" > 0"
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ],
+      "foreign_key_constraints": [
+        {
+          "name": "assessment_items_assessment_id_fkey",
+          "source_table": "public.assessment_items",
+          "source_columns": [
+            "assessment_id"
+          ],
+          "target_table": "public.assessments",
+          "target_columns": [
+            "id"
+          ]
+        },
+        {
+          "name": "assessment_test_cases_assessment_item_id_fkey",
+          "source_table": "public.assessment_test_cases",
+          "source_columns": [
+            "assessment_item_id"
+          ],
+          "target_table": "public.assessment_items",
+          "target_columns": [
+            "id"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "public.assessment_test_cases",
+      "rls_enabled": true,
+      "rows": 0,
+      "columns": [
+        {
+          "name": "id",
+          "data_type": "uuid",
+          "format": "uuid",
+          "options": [
+            "updatable"
+          ],
+          "default_value": "gen_random_uuid()"
+        },
+        {
+          "name": "assessment_item_id",
+          "data_type": "uuid",
+          "format": "uuid",
+          "options": [
+            "updatable"
+          ]
+        },
+        {
+          "name": "args",
+          "data_type": "jsonb",
+          "format": "jsonb",
+          "options": [
+            "updatable"
+          ],
+          "default_value": "'[]'::jsonb",
+          "check": "jsonb_typeof(args) = 'array'::text"
+        },
+        {
+          "name": "stdin",
+          "data_type": "text",
+          "format": "text",
+          "options": [
+            "updatable"
+          ],
+          "default_value": "''::text"
+        },
+        {
+          "name": "expected_output",
+          "data_type": "text",
+          "format": "text",
+          "options": [
+            "updatable"
+          ]
+        },
+        {
+          "name": "is_hidden",
+          "data_type": "boolean",
+          "format": "bool",
+          "options": [
+            "updatable"
+          ],
+          "default_value": "true"
+        },
+        {
+          "name": "weight",
+          "data_type": "numeric",
+          "format": "numeric",
+          "options": [
+            "updatable"
+          ],
+          "default_value": "1",
+          "check": "weight > 0::numeric"
+        },
+        {
+          "name": "position",
+          "data_type": "integer",
+          "format": "int4",
+          "options": [
+            "updatable"
+          ],
+          "check": "\"position\" > 0"
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ],
+      "foreign_key_constraints": [
+        {
+          "name": "assessment_test_cases_assessment_item_id_fkey",
+          "source_table": "public.assessment_test_cases",
+          "source_columns": [
+            "assessment_item_id"
+          ],
+          "target_table": "public.assessment_items",
+          "target_columns": [
+            "id"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "public.assessment_sessions",
+      "rls_enabled": true,
+      "rows": 0,
+      "columns": [
+        {
+          "name": "id",
+          "data_type": "uuid",
+          "format": "uuid",
+          "options": [
+            "updatable"
+          ],
+          "default_value": "gen_random_uuid()"
+        },
+        {
+          "name": "user_id",
+          "data_type": "uuid",
+          "format": "uuid",
+          "options": [
+            "updatable"
+          ]
+        },
+        {
+          "name": "assessment_id",
+          "data_type": "uuid",
+          "format": "uuid",
+          "options": [
+            "updatable"
+          ]
+        },
+        {
+          "name": "status",
+          "data_type": "text",
+          "format": "text",
+          "options": [
+            "updatable"
+          ],
+          "default_value": "'IN_PROGRESS'::text",
+          "check": "status = ANY (ARRAY['IN_PROGRESS'::text, 'COMPLETED'::text, 'ABANDONED'::text])"
+        },
+        {
+          "name": "score",
+          "data_type": "numeric",
+          "format": "numeric",
+          "options": [
+            "nullable",
+            "updatable"
+          ],
+          "check": "score IS NULL OR score >= 0::numeric AND score <= 100::numeric"
+        },
+        {
+          "name": "answers",
+          "data_type": "jsonb",
+          "format": "jsonb",
+          "options": [
+            "updatable"
+          ],
+          "default_value": "'{}'::jsonb",
+          "check": "octet_length(answers::text) <= 100000"
+        },
+        {
+          "name": "safe_feedback",
+          "data_type": "jsonb",
+          "format": "jsonb",
+          "options": [
+            "updatable"
+          ],
+          "default_value": "'{}'::jsonb",
+          "check": "jsonb_typeof(safe_feedback) = 'object'::text"
+        },
+        {
+          "name": "started_at",
+          "data_type": "timestamp with time zone",
+          "format": "timestamptz",
+          "options": [
+            "updatable"
+          ],
+          "default_value": "now()"
+        },
+        {
+          "name": "completed_at",
+          "data_type": "timestamp with time zone",
+          "format": "timestamptz",
+          "options": [
+            "nullable",
+            "updatable"
+          ]
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ],
+      "foreign_key_constraints": [
+        {
+          "name": "assessment_sessions_user_id_fkey",
+          "source_table": "public.assessment_sessions",
+          "source_columns": [
+            "user_id"
+          ],
+          "target_table": "auth.users",
+          "target_columns": [
+            "id"
+          ]
+        },
+        {
+          "name": "assessment_sessions_assessment_id_fkey",
+          "source_table": "public.assessment_sessions",
+          "source_columns": [
+            "assessment_id"
+          ],
+          "target_table": "public.assessments",
+          "target_columns": [
+            "id"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "public.assessment_results",
+      "rls_enabled": true,
+      "rows": 0,
+      "columns": [
+        {
+          "name": "id",
+          "data_type": "uuid",
+          "format": "uuid",
+          "options": [
+            "updatable"
+          ],
+          "default_value": "gen_random_uuid()"
+        },
+        {
+          "name": "user_id",
+          "data_type": "uuid",
+          "format": "uuid",
+          "options": [
+            "updatable"
+          ]
+        },
+        {
+          "name": "assessment_id",
+          "data_type": "uuid",
+          "format": "uuid",
+          "options": [
+            "updatable"
+          ]
+        },
+        {
+          "name": "attempt_count",
+          "data_type": "integer",
+          "format": "int4",
+          "options": [
+            "updatable"
+          ],
+          "default_value": "0",
+          "check": "attempt_count >= 0"
+        },
+        {
+          "name": "latest_score",
+          "data_type": "numeric",
+          "format": "numeric",
+          "options": [
+            "updatable"
+          ],
+          "default_value": "0",
+          "check": "latest_score >= 0::numeric AND latest_score <= 100::numeric"
+        },
+        {
+          "name": "highest_score",
+          "data_type": "numeric",
+          "format": "numeric",
+          "options": [
+            "updatable"
+          ],
+          "default_value": "0",
+          "check": "highest_score >= 0::numeric AND highest_score <= 100::numeric"
+        },
+        {
+          "name": "passed",
+          "data_type": "boolean",
+          "format": "bool",
+          "options": [
+            "updatable"
+          ],
+          "default_value": "false"
+        },
+        {
+          "name": "completed_at",
+          "data_type": "timestamp with time zone",
+          "format": "timestamptz",
+          "options": [
+            "nullable",
+            "updatable"
+          ]
+        },
+        {
+          "name": "updated_at",
+          "data_type": "timestamp with time zone",
+          "format": "timestamptz",
+          "options": [
+            "updatable"
+          ],
+          "default_value": "now()"
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ],
+      "foreign_key_constraints": [
+        {
+          "name": "assessment_results_user_id_fkey",
+          "source_table": "public.assessment_results",
+          "source_columns": [
+            "user_id"
+          ],
+          "target_table": "auth.users",
+          "target_columns": [
+            "id"
+          ]
+        },
+        {
+          "name": "assessment_results_assessment_id_fkey",
+          "source_table": "public.assessment_results",
+          "source_columns": [
+            "assessment_id"
+          ],
+          "target_table": "public.assessments",
+          "target_columns": [
+            "id"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "public.forum_topics",
+      "rls_enabled": true,
+      "rows": 0,
+      "columns": [
+        {
+          "name": "id",
+          "data_type": "uuid",
+          "format": "uuid",
+          "options": [
+            "updatable"
+          ],
+          "default_value": "gen_random_uuid()"
+        },
+        {
+          "name": "author_id",
+          "data_type": "uuid",
+          "format": "uuid",
+          "options": [
+            "updatable"
+          ]
+        },
+        {
+          "name": "title",
+          "data_type": "text",
+          "format": "text",
+          "options": [
+            "updatable"
+          ],
+          "check": "char_length(btrim(title)) >= 6 AND char_length(btrim(title)) <= 140"
+        },
+        {
+          "name": "body",
+          "data_type": "text",
+          "format": "text",
+          "options": [
+            "updatable"
+          ],
+          "check": "char_length(btrim(body)) >= 10 AND char_length(btrim(body)) <= 6000"
+        },
+        {
+          "name": "category",
+          "data_type": "text",
+          "format": "text",
+          "options": [
+            "updatable"
+          ],
+          "default_value": "'DATABASE'::text",
+          "check": "category = ANY (ARRAY['DATABASE'::text, 'GENERAL'::text])"
+        },
+        {
+          "name": "is_locked",
+          "data_type": "boolean",
+          "format": "bool",
+          "options": [
+            "updatable"
+          ],
+          "default_value": "false"
+        },
+        {
+          "name": "is_hidden",
+          "data_type": "boolean",
+          "format": "bool",
+          "options": [
+            "updatable"
+          ],
+          "default_value": "false"
+        },
+        {
+          "name": "created_at",
+          "data_type": "timestamp with time zone",
+          "format": "timestamptz",
+          "options": [
+            "updatable"
+          ],
+          "default_value": "now()"
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ],
+      "foreign_key_constraints": [
+        {
+          "name": "forum_topics_author_id_fkey",
+          "source_table": "public.forum_topics",
+          "source_columns": [
+            "author_id"
+          ],
+          "target_table": "public.profiles",
+          "target_columns": [
+            "id"
+          ]
+        },
+        {
+          "name": "forum_replies_topic_id_fkey",
+          "source_table": "public.forum_replies",
+          "source_columns": [
+            "topic_id"
+          ],
+          "target_table": "public.forum_topics",
+          "target_columns": [
+            "id"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "public.forum_replies",
+      "rls_enabled": true,
+      "rows": 0,
+      "columns": [
+        {
+          "name": "id",
+          "data_type": "uuid",
+          "format": "uuid",
+          "options": [
+            "updatable"
+          ],
+          "default_value": "gen_random_uuid()"
+        },
+        {
+          "name": "topic_id",
+          "data_type": "uuid",
+          "format": "uuid",
+          "options": [
+            "updatable"
+          ]
+        },
+        {
+          "name": "author_id",
+          "data_type": "uuid",
+          "format": "uuid",
+          "options": [
+            "updatable"
+          ]
+        },
+        {
+          "name": "body",
+          "data_type": "text",
+          "format": "text",
+          "options": [
+            "updatable"
+          ],
+          "check": "char_length(btrim(body)) >= 2 AND char_length(btrim(body)) <= 4000"
+        },
+        {
+          "name": "is_hidden",
+          "data_type": "boolean",
+          "format": "bool",
+          "options": [
+            "updatable"
+          ],
+          "default_value": "false"
+        },
+        {
+          "name": "created_at",
+          "data_type": "timestamp with time zone",
+          "format": "timestamptz",
+          "options": [
+            "updatable"
+          ],
+          "default_value": "now()"
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ],
+      "foreign_key_constraints": [
+        {
+          "name": "forum_replies_topic_id_fkey",
+          "source_table": "public.forum_replies",
+          "source_columns": [
+            "topic_id"
+          ],
+          "target_table": "public.forum_topics",
+          "target_columns": [
+            "id"
+          ]
+        },
+        {
+          "name": "forum_replies_author_id_fkey",
+          "source_table": "public.forum_replies",
+          "source_columns": [
+            "author_id"
+          ],
+          "target_table": "public.profiles",
+          "target_columns": [
+            "id"
+          ]
+        }
+      ]
+    }
+  ],
+  "migrations": [
+    {
+      "version": "20260924183247",
+      "name": "create_profiles"
+    },
+    {
+      "version": "20260924183445",
+      "name": "learning_core"
+    },
+    {
+      "version": "20260924183450",
+      "name": "seed_learning_core"
+    },
+    {
+      "version": "20260924183538",
+      "name": "restrict_profile_trigger"
+    },
+    {
+      "version": "20260924184928",
+      "name": "index_lesson_progress_lesson"
+    },
+    {
+      "version": "20260924185557",
+      "name": "java_workspace"
+    },
+    {
+      "version": "20260924190244",
+      "name": "practice_core"
+    },
+    {
+      "version": "20260924190419",
+      "name": "seed_practice"
+    },
+    {
+      "version": "20260924191324",
+      "name": "exercise_view_authorization"
+    },
+    {
+      "version": "20260924191553",
+      "name": "invoker_exercise_views"
+    },
+    {
+      "version": "20260924191610",
+      "name": "visible_test_filter_privilege"
+    },
+    {
+      "version": "20260924192732",
+      "name": "update_workspace_lesson_copy"
+    },
+    {
+      "version": "20260924234227",
+      "name": "javascript_lab"
+    },
+    {
+      "version": "20260925001635",
+      "name": "flowchart_missing_node"
+    },
+    {
+      "version": "20260925003039",
+      "name": "ai_tutor"
+    },
+    {
+      "version": "20260925005452",
+      "name": "assessment"
+    },
+    {
+      "version": "20260925015220",
+      "name": "thinkcode_admin_cms"
+    },
+    {
+      "version": "20260927181037",
+      "name": "pti_pilot_course_content"
+    },
+    {
+      "version": "20260927205310",
+      "name": "enrich_pti_pilot_lessons"
+    },
+    {
+      "version": "20260927212426",
+      "name": "remove_pti_label_from_learning_path"
+    },
+    {
+      "version": "20260927215713",
+      "name": "deepen_and_consolidate_learning_content"
+    },
+    {
+      "version": "20260929035102",
+      "name": "quethink_brand_content"
+    },
+    {
+      "version": "20260929104941",
+      "name": "add_database_lesson_query"
+    },
+    {
+      "version": "20260929162844",
+      "name": "reorganize_quethink_database_topics"
+    },
+    {
+      "version": "20260929163046",
+      "name": "align_database_material_titles"
+    },
+    {
+      "version": "20260929170257",
+      "name": "align_material_practice_tasks"
+    },
+    {
+      "version": "20260929172129",
+      "name": "keep_relation_materials_sql_free"
+    },
+    {
+      "version": "20260929172433",
+      "name": "remove_query_wording_from_relation_materials"
+    },
+    {
+      "version": "20260930114229",
+      "name": "interactive_campus_curriculum"
+    },
+    {
+      "version": "20260930115127",
+      "name": "refine_relation_exploration_copy"
+    },
+    {
+      "version": "20260930123239",
+      "name": "focus_schema_visualizer_2d"
+    },
+    {
+      "version": "20260930141504",
+      "name": "varied_practice_datasets"
+    },
+    {
+      "version": "20261004075424",
+      "name": "reading_materials_only"
+    },
+    {
+      "version": "20261004093254",
+      "name": "diagnostic_reading_flow"
+    },
+    {
+      "version": "20261004093336",
+      "name": "reading_progress_and_pretest_content"
+    },
+    {
+      "version": "20261005091218",
+      "name": "mandatory_learning_core"
+    },
+    {
+      "version": "20261006033506",
+      "name": "trusted_sql_post_test"
+    },
+    {
+      "version": "20261006050438",
+      "name": "contextual_question_bank"
+    },
+    {
+      "version": "20261008041658",
+      "name": "contextual_diagnostic_questions"
+    },
+    {
+      "version": "20261008041712",
+      "name": "clear_diagnostic_questions"
+    },
+    {
+      "version": "20261008042909",
+      "name": "retire_pretest_and_final_challenge"
+    },
+    {
+      "version": "20261008043057",
+      "name": "discussion_forum"
+    }
+  ],
+  "policies": [
+    {
+      "schemaname": "public",
+      "tablename": "ai_messages",
+      "policyname": "Users read messages from own AI sessions",
+      "permissive": "PERMISSIVE",
+      "roles": "{authenticated}",
+      "cmd": "SELECT",
+      "qual": "(EXISTS ( SELECT 1\n   FROM ai_sessions s\n  WHERE ((s.id = ai_messages.session_id) AND (s.user_id = ( SELECT auth.uid() AS uid)))))",
+      "with_check": null
+    },
+    {
+      "schemaname": "public",
+      "tablename": "ai_sessions",
+      "policyname": "Users read own AI sessions",
+      "permissive": "PERMISSIVE",
+      "roles": "{authenticated}",
+      "cmd": "SELECT",
+      "qual": "(( SELECT auth.uid() AS uid) = user_id)",
+      "with_check": null
+    },
+    {
+      "schemaname": "public",
+      "tablename": "assessment_results",
+      "policyname": "Users read own assessment results",
+      "permissive": "PERMISSIVE",
+      "roles": "{authenticated}",
+      "cmd": "SELECT",
+      "qual": "(( SELECT auth.uid() AS uid) = user_id)",
+      "with_check": null
+    },
+    {
+      "schemaname": "public",
+      "tablename": "assessment_sessions",
+      "policyname": "Users read own assessment sessions",
+      "permissive": "PERMISSIVE",
+      "roles": "{authenticated}",
+      "cmd": "SELECT",
+      "qual": "(( SELECT auth.uid() AS uid) = user_id)",
+      "with_check": null
+    },
+    {
+      "schemaname": "public",
+      "tablename": "chapters",
+      "policyname": "Published chapters are readable",
+      "permissive": "PERMISSIVE",
+      "roles": "{anon,authenticated}",
+      "cmd": "SELECT",
+      "qual": "(is_published AND (EXISTS ( SELECT 1\n   FROM learning_paths path\n  WHERE ((path.id = chapters.learning_path_id) AND path.is_published))))",
+      "with_check": null
+    },
+    {
+      "schemaname": "public",
+      "tablename": "exercise_attempts",
+      "policyname": "Users read own exercise attempts",
+      "permissive": "PERMISSIVE",
+      "roles": "{authenticated}",
+      "cmd": "SELECT",
+      "qual": "(( SELECT auth.uid() AS uid) = user_id)",
+      "with_check": null
+    },
+    {
+      "schemaname": "public",
+      "tablename": "exercises",
+      "policyname": "Users read published available exercises",
+      "permissive": "PERMISSIVE",
+      "roles": "{authenticated}",
+      "cmd": "SELECT",
+      "qual": "(is_published AND current_user_lesson_available(lesson_id) AND (EXISTS ( SELECT 1\n   FROM ((lessons lesson\n     JOIN chapters chapter ON ((chapter.id = lesson.chapter_id)))\n     JOIN learning_paths path ON ((path.id = chapter.learning_path_id)))\n  WHERE ((lesson.id = exercises.lesson_id) AND lesson.is_published AND chapter.is_published AND path.is_published))))",
+      "with_check": null
+    },
+    {
+      "schemaname": "public",
+      "tablename": "forum_replies",
+      "policyname": "forum_reply_read",
+      "permissive": "PERMISSIVE",
+      "roles": "{authenticated}",
+      "cmd": "SELECT",
+      "qual": "((NOT current_user_has_active_assessment()) AND ((NOT is_hidden) OR (EXISTS ( SELECT 1\n   FROM profiles p\n  WHERE ((p.id = ( SELECT auth.uid() AS uid)) AND (p.role = 'ADMIN'::app_role))))) AND (EXISTS ( SELECT 1\n   FROM forum_topics t\n  WHERE (t.id = forum_replies.topic_id))))",
+      "with_check": null
+    },
+    {
+      "schemaname": "public",
+      "tablename": "forum_topics",
+      "policyname": "forum_topic_read",
+      "permissive": "PERMISSIVE",
+      "roles": "{authenticated}",
+      "cmd": "SELECT",
+      "qual": "((NOT current_user_has_active_assessment()) AND ((NOT is_hidden) OR (EXISTS ( SELECT 1\n   FROM profiles p\n  WHERE ((p.id = ( SELECT auth.uid() AS uid)) AND (p.role = 'ADMIN'::app_role))))))",
+      "with_check": null
+    },
+    {
+      "schemaname": "public",
+      "tablename": "learning_paths",
+      "policyname": "Published learning paths are readable",
+      "permissive": "PERMISSIVE",
+      "roles": "{anon,authenticated}",
+      "cmd": "SELECT",
+      "qual": "is_published",
+      "with_check": null
+    },
+    {
+      "schemaname": "public",
+      "tablename": "lesson_progress",
+      "policyname": "Users read own lesson progress",
+      "permissive": "PERMISSIVE",
+      "roles": "{authenticated}",
+      "cmd": "SELECT",
+      "qual": "(( SELECT auth.uid() AS uid) = user_id)",
+      "with_check": null
+    },
+    {
+      "schemaname": "public",
+      "tablename": "lessons",
+      "policyname": "Authenticated users read published lessons",
+      "permissive": "PERMISSIVE",
+      "roles": "{authenticated}",
+      "cmd": "SELECT",
+      "qual": "(is_published AND (EXISTS ( SELECT 1\n   FROM (chapters chapter\n     JOIN learning_paths path ON ((path.id = chapter.learning_path_id)))\n  WHERE ((chapter.id = lessons.chapter_id) AND chapter.is_published AND path.is_published))))",
+      "with_check": null
+    },
+    {
+      "schemaname": "public",
+      "tablename": "lessons",
+      "policyname": "Guests read published previews",
+      "permissive": "PERMISSIVE",
+      "roles": "{anon}",
+      "cmd": "SELECT",
+      "qual": "(is_published AND is_preview AND (EXISTS ( SELECT 1\n   FROM (chapters chapter\n     JOIN learning_paths path ON ((path.id = chapter.learning_path_id)))\n  WHERE ((chapter.id = lessons.chapter_id) AND chapter.is_published AND path.is_published))))",
+      "with_check": null
+    },
+    {
+      "schemaname": "public",
+      "tablename": "profiles",
+      "policyname": "Users read own profile",
+      "permissive": "PERMISSIVE",
+      "roles": "{authenticated}",
+      "cmd": "SELECT",
+      "qual": "(( SELECT auth.uid() AS uid) = id)",
+      "with_check": null
+    },
+    {
+      "schemaname": "public",
+      "tablename": "test_cases",
+      "policyname": "Users read visible tests for available exercises",
+      "permissive": "PERMISSIVE",
+      "roles": "{authenticated}",
+      "cmd": "SELECT",
+      "qual": "((NOT is_hidden) AND (EXISTS ( SELECT 1\n   FROM exercises exercise\n  WHERE ((exercise.id = test_cases.exercise_id) AND exercise.is_published))))",
+      "with_check": null
+    }
+  ],
+  "function_signatures": [
+    {
+      "schema_name": "public",
+      "function_name": "acknowledge_material_read",
+      "arguments": "p_lesson_id uuid",
+      "result_type": "void",
+      "security_definer": true,
+      "config": [
+        "search_path=\"\""
+      ],
+      "anon_execute": false,
+      "authenticated_execute": true
+    },
+    {
+      "schema_name": "public",
+      "function_name": "consume_code_request_quota",
+      "arguments": "p_kind text",
+      "result_type": "boolean",
+      "security_definer": true,
+      "config": [
+        "search_path=\"\""
+      ],
+      "anon_execute": false,
+      "authenticated_execute": true
+    },
+    {
+      "schema_name": "public",
+      "function_name": "course_has_baseline",
+      "arguments": "p_path_id uuid, p_user_id uuid",
+      "result_type": "boolean",
+      "security_definer": true,
+      "config": [
+        "search_path=\"\""
+      ],
+      "anon_execute": false,
+      "authenticated_execute": false
+    },
+    {
+      "schema_name": "public",
+      "function_name": "current_user_has_active_assessment",
+      "arguments": "",
+      "result_type": "boolean",
+      "security_definer": true,
+      "config": [
+        "search_path=\"\""
+      ],
+      "anon_execute": false,
+      "authenticated_execute": true
+    },
+    {
+      "schema_name": "public",
+      "function_name": "current_user_lesson_available",
+      "arguments": "p_lesson_id uuid",
+      "result_type": "boolean",
+      "security_definer": true,
+      "config": [
+        "search_path=\"\""
+      ],
+      "anon_execute": false,
+      "authenticated_execute": true
+    },
+    {
+      "schema_name": "public",
+      "function_name": "finalize_assessment_session",
+      "arguments": "p_session_id uuid, p_score numeric, p_answers jsonb, p_safe_feedback jsonb",
+      "result_type": "boolean",
+      "security_definer": true,
+      "config": [
+        "search_path=\"\""
+      ],
+      "anon_execute": false,
+      "authenticated_execute": false
+    },
+    {
+      "schema_name": "public",
+      "function_name": "forum_check_writer",
+      "arguments": "p_user_id uuid",
+      "result_type": "void",
+      "security_definer": false,
+      "config": [
+        "search_path=\"\""
+      ],
+      "anon_execute": false,
+      "authenticated_execute": false
+    },
+    {
+      "schema_name": "public",
+      "function_name": "forum_create_reply",
+      "arguments": "p_user_id uuid, p_topic_id uuid, p_body text",
+      "result_type": "uuid",
+      "security_definer": false,
+      "config": [
+        "search_path=\"\""
+      ],
+      "anon_execute": false,
+      "authenticated_execute": false
+    },
+    {
+      "schema_name": "public",
+      "function_name": "forum_create_topic",
+      "arguments": "p_user_id uuid, p_title text, p_body text, p_category text",
+      "result_type": "uuid",
+      "security_definer": false,
+      "config": [
+        "search_path=\"\""
+      ],
+      "anon_execute": false,
+      "authenticated_execute": false
+    },
+    {
+      "schema_name": "public",
+      "function_name": "forum_moderate",
+      "arguments": "p_user_id uuid, p_target_id uuid, p_action text, p_value boolean",
+      "result_type": "void",
+      "security_definer": false,
+      "config": [
+        "search_path=\"\""
+      ],
+      "anon_execute": false,
+      "authenticated_execute": false
+    },
+    {
+      "schema_name": "public",
+      "function_name": "handle_new_user",
+      "arguments": "",
+      "result_type": "trigger",
+      "security_definer": true,
+      "config": [
+        "search_path=\"\""
+      ],
+      "anon_execute": false,
+      "authenticated_execute": false
+    },
+    {
+      "schema_name": "public",
+      "function_name": "phase1_complete_lesson",
+      "arguments": "p_lesson_id uuid",
+      "result_type": "void",
+      "security_definer": true,
+      "config": [
+        "search_path=\"\""
+      ],
+      "anon_execute": false,
+      "authenticated_execute": false
+    },
+    {
+      "schema_name": "public",
+      "function_name": "phase1_lesson_is_available",
+      "arguments": "p_lesson_id uuid, p_user_id uuid",
+      "result_type": "boolean",
+      "security_definer": true,
+      "config": [
+        "search_path=\"\""
+      ],
+      "anon_execute": false,
+      "authenticated_execute": false
+    },
+    {
+      "schema_name": "public",
+      "function_name": "phase1_start_lesson",
+      "arguments": "p_lesson_id uuid",
+      "result_type": "void",
+      "security_definer": true,
+      "config": [
+        "search_path=\"\""
+      ],
+      "anon_execute": false,
+      "authenticated_execute": true
+    },
+    {
+      "schema_name": "public",
+      "function_name": "phase3_record_attempt",
+      "arguments": "p_user_id uuid, p_exercise_id uuid, p_source_code text, p_answer jsonb, p_score numeric, p_passed boolean, p_feedback jsonb",
+      "result_type": "boolean",
+      "security_definer": true,
+      "config": [
+        "search_path=\"\""
+      ],
+      "anon_execute": false,
+      "authenticated_execute": false
+    },
+    {
+      "schema_name": "public",
+      "function_name": "set_profile_updated_at",
+      "arguments": "",
+      "result_type": "trigger",
+      "security_definer": false,
+      "config": [
+        "search_path=\"\""
+      ],
+      "anon_execute": true,
+      "authenticated_execute": true
+    },
+    {
+      "schema_name": "public",
+      "function_name": "start_assessment_session",
+      "arguments": "p_assessment_id uuid",
+      "result_type": "uuid",
+      "security_definer": true,
+      "config": [
+        "search_path=\"\""
+      ],
+      "anon_execute": false,
+      "authenticated_execute": true
+    }
+  ],
+  "inspected_function_definitions": [
+    {
+      "proname": "acknowledge_material_read",
+      "definition": "CREATE OR REPLACE FUNCTION public.acknowledge_material_read(p_lesson_id uuid)\n RETURNS void\n LANGUAGE plpgsql\n SECURITY DEFINER\n SET search_path TO ''\nAS $function$\ndeclare v_user uuid:=auth.uid();\nbegin\n if v_user is null then raise exception 'Authentication required' using errcode='42501'; end if;\n perform pg_advisory_xact_lock(hashtextextended(v_user::text,0));\n if not public.phase1_lesson_is_available(p_lesson_id,v_user) or exists(select 1 from public.assessment_sessions where user_id=v_user and status='IN_PROGRESS') then\n raise exception 'Material unavailable' using errcode='42501'; end if;\n insert into public.lesson_progress(user_id,lesson_id,status,read_at) values(v_user,p_lesson_id,'IN_PROGRESS',now())\n on conflict(user_id,lesson_id) do update set read_at=coalesce(public.lesson_progress.read_at,now());\nend;\n$function$\n"
+    },
+    {
+      "proname": "course_has_baseline",
+      "definition": "CREATE OR REPLACE FUNCTION public.course_has_baseline(p_path_id uuid, p_user_id uuid)\n RETURNS boolean\n LANGUAGE sql\n STABLE SECURITY DEFINER\n SET search_path TO ''\nAS $function$ SELECT p_user_id IS NOT NULL AND EXISTS(SELECT 1 FROM public.learning_paths WHERE id=p_path_id AND is_published); $function$\n"
+    },
+    {
+      "proname": "current_user_has_active_assessment",
+      "definition": "CREATE OR REPLACE FUNCTION public.current_user_has_active_assessment()\n RETURNS boolean\n LANGUAGE plpgsql\n STABLE SECURITY DEFINER\n SET search_path TO ''\nAS $function$\ndeclare\n  v_active boolean := false;\nbegin\n  if auth.uid() is null or to_regclass('public.assessment_sessions') is null then return false; end if;\n  execute 'select exists (select 1 from public.assessment_sessions where user_id = $1 and status = ''IN_PROGRESS'')'\n    into v_active using auth.uid();\n  return coalesce(v_active, false);\nend;\n$function$\n"
+    },
+    {
+      "proname": "current_user_lesson_available",
+      "definition": "CREATE OR REPLACE FUNCTION public.current_user_lesson_available(p_lesson_id uuid)\n RETURNS boolean\n LANGUAGE sql\n STABLE SECURITY DEFINER\n SET search_path TO ''\nAS $function$\n  select coalesce(auth.uid() is not null and public.phase1_lesson_is_available(p_lesson_id, auth.uid()), false);\n$function$\n"
+    },
+    {
+      "proname": "forum_check_writer",
+      "definition": "CREATE OR REPLACE FUNCTION public.forum_check_writer(p_user_id uuid)\n RETURNS void\n LANGUAGE plpgsql\n SET search_path TO ''\nAS $function$\nbegin\n if (select auth.jwt()->>'role') is distinct from 'service_role' then raise exception 'Forbidden' using errcode='42501'; end if;\n if p_user_id is null or not exists(select 1 from public.profiles where id=p_user_id) then raise exception 'Forbidden' using errcode='42501'; end if;\n perform pg_advisory_xact_lock(hashtextextended(p_user_id::text,0));\n if exists(select 1 from public.assessment_sessions where user_id=p_user_id and status='IN_PROGRESS') then raise exception 'Assessment active' using errcode='42501'; end if;\nend $function$\n"
+    },
+    {
+      "proname": "forum_moderate",
+      "definition": "CREATE OR REPLACE FUNCTION public.forum_moderate(p_user_id uuid, p_target_id uuid, p_action text, p_value boolean)\n RETURNS void\n LANGUAGE plpgsql\n SET search_path TO ''\nAS $function$\nbegin\n perform public.forum_check_writer(p_user_id);\n if not exists(select 1 from public.profiles where id=p_user_id and role='ADMIN') then raise exception 'Forbidden' using errcode='42501'; end if;\n if p_action='lock_topic' then update public.forum_topics set is_locked=p_value where id=p_target_id;\n elsif p_action='hide_topic' then update public.forum_topics set is_hidden=p_value where id=p_target_id;\n elsif p_action='hide_reply' then update public.forum_replies set is_hidden=p_value where id=p_target_id;\n else raise exception 'Invalid moderation action' using errcode='22023'; end if;\n if not found then raise exception 'Content unavailable' using errcode='22023'; end if;\nend $function$\n"
+    },
+    {
+      "proname": "handle_new_user",
+      "definition": "CREATE OR REPLACE FUNCTION public.handle_new_user()\n RETURNS trigger\n LANGUAGE plpgsql\n SECURITY DEFINER\n SET search_path TO ''\nAS $function$\nbegin\n  insert into public.profiles (id, role) values (new.id, 'USER');\n  return new;\nend;\n$function$\n"
+    },
+    {
+      "proname": "phase1_lesson_is_available",
+      "definition": "CREATE OR REPLACE FUNCTION public.phase1_lesson_is_available(p_lesson_id uuid, p_user_id uuid)\n RETURNS boolean\n LANGUAGE sql\n STABLE SECURITY DEFINER\n SET search_path TO ''\nAS $function$\n select exists(select 1 from public.lessons t join public.chapters c on c.id=t.chapter_id join public.learning_paths p on p.id=c.learning_path_id\n where t.id=p_lesson_id and t.is_published and c.is_published and p.is_published and (\n exists(select 1 from public.lesson_progress lp where lp.user_id=p_user_id and lp.lesson_id=t.id and lp.status='COMPLETED') or (\n not exists(\n select 1 from public.lessons prior join public.chapters pc on pc.id=prior.chapter_id\n left join public.lesson_progress lp on lp.lesson_id=prior.id and lp.user_id=p_user_id\n where pc.learning_path_id=p.id and pc.is_published and pc.is_required and prior.is_published and prior.is_required\n and (pc.position,prior.position)<(c.position,t.position) and lp.status is distinct from 'COMPLETED'))));\n$function$\n"
+    },
+    {
+      "proname": "start_assessment_session",
+      "definition": "CREATE OR REPLACE FUNCTION public.start_assessment_session(p_assessment_id uuid)\n RETURNS uuid\n LANGUAGE plpgsql\n SECURITY DEFINER\n SET search_path TO ''\nAS $function$\ndeclare v_user uuid := auth.uid(); v_test public.assessments%rowtype; v_id uuid; v_active_assessment uuid;\nbegin\n if v_user is null then raise exception 'Authentication required' using errcode='42501'; end if;\n -- Serialize starts and reading acknowledgement for the same learner.\n perform pg_advisory_xact_lock(hashtextextended(v_user::text,0));\n select a.* into v_test from public.assessments a join public.learning_paths p on p.id=a.learning_path_id\n where a.id=p_assessment_id and a.is_published and p.is_published;\n if not found then raise exception 'Assessment unavailable' using errcode='42501'; end if;\n select id,assessment_id into v_id,v_active_assessment from public.assessment_sessions where user_id=v_user and status='IN_PROGRESS' order by started_at limit 1;\n if v_id is not null then\n  if v_active_assessment=p_assessment_id then return v_id; end if;\n  raise exception 'Finish the active assessment first' using errcode='42501';\n end if;\n if v_test.type='PRETEST' then raise exception 'Assessment retired' using errcode='42501'; end if;\n  if exists(select 1 from public.lessons l join public.chapters c on c.id=l.chapter_id\n   where c.learning_path_id=v_test.learning_path_id and c.is_published and c.is_required and l.is_published and l.is_required\n    and c.position<=v_test.gate_after_chapter\n    and not exists(select 1 from public.lesson_progress lp where lp.user_id=v_user and lp.lesson_id=l.id and lp.status='COMPLETED')) then\n   raise exception 'Required material incomplete' using errcode='42501'; end if;\n if not exists(select 1 from public.assessment_items where assessment_id=v_test.id) then raise exception 'No assessment items'; end if;\n insert into public.assessment_sessions(user_id,assessment_id) values(v_user,p_assessment_id) returning id into v_id;\n return v_id;\nend;\n$function$\n"
+    },
+    {
+      "proname": "consume_code_request_quota",
+      "definition": "CREATE OR REPLACE FUNCTION public.consume_code_request_quota(p_kind text)\n RETURNS boolean\n LANGUAGE plpgsql\n SECURITY DEFINER\n SET search_path TO ''\nAS $function$\ndeclare\n  v_user_id uuid := auth.uid();\n  v_window timestamptz := date_trunc('minute', now());\n  v_limit integer;\n  v_accepted boolean := false;\nbegin\n  if v_user_id is null or p_kind not in ('check', 'ai', 'assessment') then return false; end if;\n  v_limit := case when p_kind = 'assessment' then 4 else 8 end;\n  insert into public.code_request_limits as quota (user_id, kind, window_started_at, request_count)\n  values (v_user_id, p_kind, v_window, 1)\n  on conflict (user_id, kind) do update\n  set window_started_at = v_window,\n      request_count = case when quota.window_started_at = v_window then quota.request_count + 1 else 1 end\n  where quota.window_started_at <> v_window or quota.request_count < v_limit\n  returning true into v_accepted;\n  return coalesce(v_accepted, false);\nend;\n$function$\n"
+    },
+    {
+      "proname": "phase1_start_lesson",
+      "definition": "CREATE OR REPLACE FUNCTION public.phase1_start_lesson(p_lesson_id uuid)\n RETURNS void\n LANGUAGE plpgsql\n SECURITY DEFINER\n SET search_path TO ''\nAS $function$\ndeclare v_user_id uuid := auth.uid();\nbegin\n  if v_user_id is null or not public.phase1_lesson_is_available(p_lesson_id, v_user_id) then\n    raise exception 'Lesson unavailable' using errcode = '42501';\n  end if;\n  insert into public.lesson_progress (user_id, lesson_id, status)\n  values (v_user_id, p_lesson_id, 'IN_PROGRESS')\n  on conflict (user_id, lesson_id) do nothing;\nend;\n$function$\n"
+    }
+  ],
+  "views": [
+    {
+      "view_name": "published_exercise_catalog",
+      "options": [
+        "security_invoker=true"
+      ],
+      "definition": " SELECT e.id,\n    e.lesson_id,\n    e.type,\n    e.title,\n    e.prompt,\n    e.starter_code,\n    e.public_config,\n    e.\"position\",\n    e.is_required\n   FROM exercises e\n     JOIN lessons lesson ON lesson.id = e.lesson_id\n     JOIN chapters chapter ON chapter.id = lesson.chapter_id\n     JOIN learning_paths path ON path.id = chapter.learning_path_id\n  WHERE e.is_published AND lesson.is_published AND chapter.is_published AND path.is_published AND current_user_lesson_available(e.lesson_id);"
+    },
+    {
+      "view_name": "published_visible_test_cases",
+      "options": [
+        "security_invoker=true"
+      ],
+      "definition": " SELECT test.id,\n    test.exercise_id,\n    test.stdin,\n    test.expected_output,\n    test.weight,\n    test.\"position\"\n   FROM test_cases test\n     JOIN exercises exercise ON exercise.id = test.exercise_id\n     JOIN lessons lesson ON lesson.id = exercise.lesson_id\n     JOIN chapters chapter ON chapter.id = lesson.chapter_id\n     JOIN learning_paths path ON path.id = chapter.learning_path_id\n  WHERE NOT test.is_hidden AND exercise.is_published AND lesson.is_published AND chapter.is_published AND path.is_published AND current_user_lesson_available(exercise.lesson_id);"
+    }
+  ],
+  "table_grants": [
+    {
+      "table_schema": "public",
+      "table_name": "ai_messages",
+      "grantee": "authenticated",
+      "privileges": "SELECT"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "ai_messages",
+      "grantee": "service_role",
+      "privileges": "DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "ai_sessions",
+      "grantee": "authenticated",
+      "privileges": "SELECT"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "ai_sessions",
+      "grantee": "service_role",
+      "privileges": "DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "assessment_items",
+      "grantee": "service_role",
+      "privileges": "DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "assessment_results",
+      "grantee": "authenticated",
+      "privileges": "SELECT"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "assessment_results",
+      "grantee": "service_role",
+      "privileges": "DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "assessment_sessions",
+      "grantee": "authenticated",
+      "privileges": "SELECT"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "assessment_sessions",
+      "grantee": "service_role",
+      "privileges": "DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "assessment_test_cases",
+      "grantee": "service_role",
+      "privileges": "DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "assessments",
+      "grantee": "service_role",
+      "privileges": "DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "chapters",
+      "grantee": "anon",
+      "privileges": "REFERENCES, SELECT, TRIGGER, TRUNCATE"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "chapters",
+      "grantee": "authenticated",
+      "privileges": "REFERENCES, SELECT, TRIGGER, TRUNCATE"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "chapters",
+      "grantee": "service_role",
+      "privileges": "DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "code_request_limits",
+      "grantee": "anon",
+      "privileges": "DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "code_request_limits",
+      "grantee": "authenticated",
+      "privileges": "DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "code_request_limits",
+      "grantee": "service_role",
+      "privileges": "DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "exercise_attempts",
+      "grantee": "anon",
+      "privileges": "DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "exercise_attempts",
+      "grantee": "authenticated",
+      "privileges": "DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "exercise_attempts",
+      "grantee": "service_role",
+      "privileges": "DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "exercises",
+      "grantee": "service_role",
+      "privileges": "DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "forum_replies",
+      "grantee": "authenticated",
+      "privileges": "SELECT"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "forum_replies",
+      "grantee": "service_role",
+      "privileges": "DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "forum_topics",
+      "grantee": "authenticated",
+      "privileges": "SELECT"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "forum_topics",
+      "grantee": "service_role",
+      "privileges": "DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "learning_paths",
+      "grantee": "anon",
+      "privileges": "REFERENCES, SELECT, TRIGGER, TRUNCATE"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "learning_paths",
+      "grantee": "authenticated",
+      "privileges": "REFERENCES, SELECT, TRIGGER, TRUNCATE"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "learning_paths",
+      "grantee": "service_role",
+      "privileges": "DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "lesson_progress",
+      "grantee": "anon",
+      "privileges": "DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "lesson_progress",
+      "grantee": "authenticated",
+      "privileges": "DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "lesson_progress",
+      "grantee": "service_role",
+      "privileges": "DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "lessons",
+      "grantee": "anon",
+      "privileges": "REFERENCES, SELECT, TRIGGER, TRUNCATE"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "lessons",
+      "grantee": "authenticated",
+      "privileges": "REFERENCES, SELECT, TRIGGER, TRUNCATE"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "lessons",
+      "grantee": "service_role",
+      "privileges": "DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "profiles",
+      "grantee": "anon",
+      "privileges": "DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "profiles",
+      "grantee": "authenticated",
+      "privileges": "DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "profiles",
+      "grantee": "service_role",
+      "privileges": "DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "published_exercise_catalog",
+      "grantee": "authenticated",
+      "privileges": "DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "published_exercise_catalog",
+      "grantee": "service_role",
+      "privileges": "DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "published_visible_test_cases",
+      "grantee": "authenticated",
+      "privileges": "DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "published_visible_test_cases",
+      "grantee": "service_role",
+      "privileges": "DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "test_cases",
+      "grantee": "service_role",
+      "privileges": "DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE"
+    }
+  ],
+  "column_privileges": [
+    {
+      "table_name": "exercises",
+      "column_name": "id",
+      "privilege_type": "SELECT",
+      "grantee": "authenticated"
+    },
+    {
+      "table_name": "exercises",
+      "column_name": "is_published",
+      "privilege_type": "SELECT",
+      "grantee": "authenticated"
+    },
+    {
+      "table_name": "exercises",
+      "column_name": "is_required",
+      "privilege_type": "SELECT",
+      "grantee": "authenticated"
+    },
+    {
+      "table_name": "exercises",
+      "column_name": "lesson_id",
+      "privilege_type": "SELECT",
+      "grantee": "authenticated"
+    },
+    {
+      "table_name": "exercises",
+      "column_name": "position",
+      "privilege_type": "SELECT",
+      "grantee": "authenticated"
+    },
+    {
+      "table_name": "exercises",
+      "column_name": "prompt",
+      "privilege_type": "SELECT",
+      "grantee": "authenticated"
+    },
+    {
+      "table_name": "exercises",
+      "column_name": "public_config",
+      "privilege_type": "SELECT",
+      "grantee": "authenticated"
+    },
+    {
+      "table_name": "exercises",
+      "column_name": "starter_code",
+      "privilege_type": "SELECT",
+      "grantee": "authenticated"
+    },
+    {
+      "table_name": "exercises",
+      "column_name": "title",
+      "privilege_type": "SELECT",
+      "grantee": "authenticated"
+    },
+    {
+      "table_name": "exercises",
+      "column_name": "type",
+      "privilege_type": "SELECT",
+      "grantee": "authenticated"
+    },
+    {
+      "table_name": "profiles",
+      "column_name": "created_at",
+      "privilege_type": "INSERT",
+      "grantee": "anon"
+    },
+    {
+      "table_name": "profiles",
+      "column_name": "created_at",
+      "privilege_type": "REFERENCES",
+      "grantee": "anon"
+    },
+    {
+      "table_name": "profiles",
+      "column_name": "created_at",
+      "privilege_type": "SELECT",
+      "grantee": "anon"
+    },
+    {
+      "table_name": "profiles",
+      "column_name": "created_at",
+      "privilege_type": "UPDATE",
+      "grantee": "anon"
+    },
+    {
+      "table_name": "profiles",
+      "column_name": "created_at",
+      "privilege_type": "INSERT",
+      "grantee": "authenticated"
+    },
+    {
+      "table_name": "profiles",
+      "column_name": "created_at",
+      "privilege_type": "REFERENCES",
+      "grantee": "authenticated"
+    },
+    {
+      "table_name": "profiles",
+      "column_name": "created_at",
+      "privilege_type": "SELECT",
+      "grantee": "authenticated"
+    },
+    {
+      "table_name": "profiles",
+      "column_name": "created_at",
+      "privilege_type": "UPDATE",
+      "grantee": "authenticated"
+    },
+    {
+      "table_name": "profiles",
+      "column_name": "display_name",
+      "privilege_type": "INSERT",
+      "grantee": "anon"
+    },
+    {
+      "table_name": "profiles",
+      "column_name": "display_name",
+      "privilege_type": "REFERENCES",
+      "grantee": "anon"
+    },
+    {
+      "table_name": "profiles",
+      "column_name": "display_name",
+      "privilege_type": "SELECT",
+      "grantee": "anon"
+    },
+    {
+      "table_name": "profiles",
+      "column_name": "display_name",
+      "privilege_type": "UPDATE",
+      "grantee": "anon"
+    },
+    {
+      "table_name": "profiles",
+      "column_name": "display_name",
+      "privilege_type": "INSERT",
+      "grantee": "authenticated"
+    },
+    {
+      "table_name": "profiles",
+      "column_name": "display_name",
+      "privilege_type": "REFERENCES",
+      "grantee": "authenticated"
+    },
+    {
+      "table_name": "profiles",
+      "column_name": "display_name",
+      "privilege_type": "SELECT",
+      "grantee": "authenticated"
+    },
+    {
+      "table_name": "profiles",
+      "column_name": "display_name",
+      "privilege_type": "UPDATE",
+      "grantee": "authenticated"
+    },
+    {
+      "table_name": "profiles",
+      "column_name": "id",
+      "privilege_type": "INSERT",
+      "grantee": "anon"
+    },
+    {
+      "table_name": "profiles",
+      "column_name": "id",
+      "privilege_type": "REFERENCES",
+      "grantee": "anon"
+    },
+    {
+      "table_name": "profiles",
+      "column_name": "id",
+      "privilege_type": "SELECT",
+      "grantee": "anon"
+    },
+    {
+      "table_name": "profiles",
+      "column_name": "id",
+      "privilege_type": "UPDATE",
+      "grantee": "anon"
+    },
+    {
+      "table_name": "profiles",
+      "column_name": "id",
+      "privilege_type": "INSERT",
+      "grantee": "authenticated"
+    },
+    {
+      "table_name": "profiles",
+      "column_name": "id",
+      "privilege_type": "REFERENCES",
+      "grantee": "authenticated"
+    },
+    {
+      "table_name": "profiles",
+      "column_name": "id",
+      "privilege_type": "SELECT",
+      "grantee": "authenticated"
+    },
+    {
+      "table_name": "profiles",
+      "column_name": "id",
+      "privilege_type": "UPDATE",
+      "grantee": "authenticated"
+    },
+    {
+      "table_name": "profiles",
+      "column_name": "role",
+      "privilege_type": "INSERT",
+      "grantee": "anon"
+    },
+    {
+      "table_name": "profiles",
+      "column_name": "role",
+      "privilege_type": "REFERENCES",
+      "grantee": "anon"
+    },
+    {
+      "table_name": "profiles",
+      "column_name": "role",
+      "privilege_type": "SELECT",
+      "grantee": "anon"
+    },
+    {
+      "table_name": "profiles",
+      "column_name": "role",
+      "privilege_type": "UPDATE",
+      "grantee": "anon"
+    },
+    {
+      "table_name": "profiles",
+      "column_name": "role",
+      "privilege_type": "INSERT",
+      "grantee": "authenticated"
+    },
+    {
+      "table_name": "profiles",
+      "column_name": "role",
+      "privilege_type": "REFERENCES",
+      "grantee": "authenticated"
+    },
+    {
+      "table_name": "profiles",
+      "column_name": "role",
+      "privilege_type": "SELECT",
+      "grantee": "authenticated"
+    },
+    {
+      "table_name": "profiles",
+      "column_name": "role",
+      "privilege_type": "UPDATE",
+      "grantee": "authenticated"
+    },
+    {
+      "table_name": "profiles",
+      "column_name": "updated_at",
+      "privilege_type": "INSERT",
+      "grantee": "anon"
+    },
+    {
+      "table_name": "profiles",
+      "column_name": "updated_at",
+      "privilege_type": "REFERENCES",
+      "grantee": "anon"
+    },
+    {
+      "table_name": "profiles",
+      "column_name": "updated_at",
+      "privilege_type": "SELECT",
+      "grantee": "anon"
+    },
+    {
+      "table_name": "profiles",
+      "column_name": "updated_at",
+      "privilege_type": "UPDATE",
+      "grantee": "anon"
+    },
+    {
+      "table_name": "profiles",
+      "column_name": "updated_at",
+      "privilege_type": "INSERT",
+      "grantee": "authenticated"
+    },
+    {
+      "table_name": "profiles",
+      "column_name": "updated_at",
+      "privilege_type": "REFERENCES",
+      "grantee": "authenticated"
+    },
+    {
+      "table_name": "profiles",
+      "column_name": "updated_at",
+      "privilege_type": "SELECT",
+      "grantee": "authenticated"
+    },
+    {
+      "table_name": "profiles",
+      "column_name": "updated_at",
+      "privilege_type": "UPDATE",
+      "grantee": "authenticated"
+    },
+    {
+      "table_name": "test_cases",
+      "column_name": "exercise_id",
+      "privilege_type": "SELECT",
+      "grantee": "authenticated"
+    },
+    {
+      "table_name": "test_cases",
+      "column_name": "expected_output",
+      "privilege_type": "SELECT",
+      "grantee": "authenticated"
+    },
+    {
+      "table_name": "test_cases",
+      "column_name": "id",
+      "privilege_type": "SELECT",
+      "grantee": "authenticated"
+    },
+    {
+      "table_name": "test_cases",
+      "column_name": "is_hidden",
+      "privilege_type": "SELECT",
+      "grantee": "authenticated"
+    },
+    {
+      "table_name": "test_cases",
+      "column_name": "position",
+      "privilege_type": "SELECT",
+      "grantee": "authenticated"
+    },
+    {
+      "table_name": "test_cases",
+      "column_name": "stdin",
+      "privilege_type": "SELECT",
+      "grantee": "authenticated"
+    },
+    {
+      "table_name": "test_cases",
+      "column_name": "weight",
+      "privilege_type": "SELECT",
+      "grantee": "authenticated"
+    }
+  ],
+  "constraints": [
+    {
+      "table_name": "ai_messages",
+      "conname": "ai_messages_content_check",
+      "contype": "c",
+      "definition": "CHECK (length(content) >= 1 AND length(content) <= 8000)"
+    },
+    {
+      "table_name": "ai_messages",
+      "conname": "ai_messages_metadata_check",
+      "contype": "c",
+      "definition": "CHECK (jsonb_typeof(metadata) = 'object'::text)"
+    },
+    {
+      "table_name": "ai_messages",
+      "conname": "ai_messages_pkey",
+      "contype": "p",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "ai_messages",
+      "conname": "ai_messages_role_check",
+      "contype": "c",
+      "definition": "CHECK (role = ANY (ARRAY['USER'::text, 'ASSISTANT'::text]))"
+    },
+    {
+      "table_name": "ai_messages",
+      "conname": "ai_messages_session_id_fkey",
+      "contype": "f",
+      "definition": "FOREIGN KEY (session_id) REFERENCES ai_sessions(id) ON DELETE CASCADE"
+    },
+    {
+      "table_name": "ai_sessions",
+      "conname": "ai_sessions_exercise_id_fkey",
+      "contype": "f",
+      "definition": "FOREIGN KEY (exercise_id) REFERENCES exercises(id) ON DELETE SET NULL"
+    },
+    {
+      "table_name": "ai_sessions",
+      "conname": "ai_sessions_lesson_id_fkey",
+      "contype": "f",
+      "definition": "FOREIGN KEY (lesson_id) REFERENCES lessons(id) ON DELETE CASCADE"
+    },
+    {
+      "table_name": "ai_sessions",
+      "conname": "ai_sessions_pkey",
+      "contype": "p",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "ai_sessions",
+      "conname": "ai_sessions_user_id_fkey",
+      "contype": "f",
+      "definition": "FOREIGN KEY (user_id) REFERENCES auth.users(id) ON DELETE CASCADE"
+    },
+    {
+      "table_name": "assessment_items",
+      "conname": "assessment_items_answer_config_check",
+      "contype": "c",
+      "definition": "CHECK (jsonb_typeof(answer_config) = 'object'::text)"
+    },
+    {
+      "table_name": "assessment_items",
+      "conname": "assessment_items_assessment_id_fkey",
+      "contype": "f",
+      "definition": "FOREIGN KEY (assessment_id) REFERENCES assessments(id) ON DELETE CASCADE"
+    },
+    {
+      "table_name": "assessment_items",
+      "conname": "assessment_items_assessment_id_position_key",
+      "contype": "u",
+      "definition": "UNIQUE (assessment_id, \"position\")"
+    },
+    {
+      "table_name": "assessment_items",
+      "conname": "assessment_items_entry_function_check",
+      "contype": "c",
+      "definition": "CHECK (entry_function IS NULL OR entry_function ~ '^[A-Za-z_$][A-Za-z0-9_$]{0,63}$'::text)"
+    },
+    {
+      "table_name": "assessment_items",
+      "conname": "assessment_items_pkey",
+      "contype": "p",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "assessment_items",
+      "conname": "assessment_items_position_check",
+      "contype": "c",
+      "definition": "CHECK (\"position\" > 0)"
+    },
+    {
+      "table_name": "assessment_items",
+      "conname": "assessment_items_public_config_check",
+      "contype": "c",
+      "definition": "CHECK (jsonb_typeof(public_config) = 'object'::text)"
+    },
+    {
+      "table_name": "assessment_items",
+      "conname": "assessment_items_weight_check",
+      "contype": "c",
+      "definition": "CHECK (weight > 0::numeric)"
+    },
+    {
+      "table_name": "assessment_results",
+      "conname": "assessment_results_assessment_id_fkey",
+      "contype": "f",
+      "definition": "FOREIGN KEY (assessment_id) REFERENCES assessments(id) ON DELETE CASCADE"
+    },
+    {
+      "table_name": "assessment_results",
+      "conname": "assessment_results_attempt_count_check",
+      "contype": "c",
+      "definition": "CHECK (attempt_count >= 0)"
+    },
+    {
+      "table_name": "assessment_results",
+      "conname": "assessment_results_highest_score_check",
+      "contype": "c",
+      "definition": "CHECK (highest_score >= 0::numeric AND highest_score <= 100::numeric)"
+    },
+    {
+      "table_name": "assessment_results",
+      "conname": "assessment_results_latest_score_check",
+      "contype": "c",
+      "definition": "CHECK (latest_score >= 0::numeric AND latest_score <= 100::numeric)"
+    },
+    {
+      "table_name": "assessment_results",
+      "conname": "assessment_results_pkey",
+      "contype": "p",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "assessment_results",
+      "conname": "assessment_results_user_id_assessment_id_key",
+      "contype": "u",
+      "definition": "UNIQUE (user_id, assessment_id)"
+    },
+    {
+      "table_name": "assessment_results",
+      "conname": "assessment_results_user_id_fkey",
+      "contype": "f",
+      "definition": "FOREIGN KEY (user_id) REFERENCES auth.users(id) ON DELETE CASCADE"
+    },
+    {
+      "table_name": "assessment_sessions",
+      "conname": "assessment_sessions_answers_check",
+      "contype": "c",
+      "definition": "CHECK (octet_length(answers::text) <= 100000)"
+    },
+    {
+      "table_name": "assessment_sessions",
+      "conname": "assessment_sessions_assessment_id_fkey",
+      "contype": "f",
+      "definition": "FOREIGN KEY (assessment_id) REFERENCES assessments(id) ON DELETE CASCADE"
+    },
+    {
+      "table_name": "assessment_sessions",
+      "conname": "assessment_sessions_pkey",
+      "contype": "p",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "assessment_sessions",
+      "conname": "assessment_sessions_safe_feedback_check",
+      "contype": "c",
+      "definition": "CHECK (jsonb_typeof(safe_feedback) = 'object'::text)"
+    },
+    {
+      "table_name": "assessment_sessions",
+      "conname": "assessment_sessions_score_check",
+      "contype": "c",
+      "definition": "CHECK (score IS NULL OR score >= 0::numeric AND score <= 100::numeric)"
+    },
+    {
+      "table_name": "assessment_sessions",
+      "conname": "assessment_sessions_status_check",
+      "contype": "c",
+      "definition": "CHECK (status = ANY (ARRAY['IN_PROGRESS'::text, 'COMPLETED'::text, 'ABANDONED'::text]))"
+    },
+    {
+      "table_name": "assessment_sessions",
+      "conname": "assessment_sessions_user_id_fkey",
+      "contype": "f",
+      "definition": "FOREIGN KEY (user_id) REFERENCES auth.users(id) ON DELETE CASCADE"
+    },
+    {
+      "table_name": "assessment_test_cases",
+      "conname": "assessment_test_cases_args_check",
+      "contype": "c",
+      "definition": "CHECK (jsonb_typeof(args) = 'array'::text)"
+    },
+    {
+      "table_name": "assessment_test_cases",
+      "conname": "assessment_test_cases_assessment_item_id_fkey",
+      "contype": "f",
+      "definition": "FOREIGN KEY (assessment_item_id) REFERENCES assessment_items(id) ON DELETE CASCADE"
+    },
+    {
+      "table_name": "assessment_test_cases",
+      "conname": "assessment_test_cases_assessment_item_id_position_key",
+      "contype": "u",
+      "definition": "UNIQUE (assessment_item_id, \"position\")"
+    },
+    {
+      "table_name": "assessment_test_cases",
+      "conname": "assessment_test_cases_pkey",
+      "contype": "p",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "assessment_test_cases",
+      "conname": "assessment_test_cases_position_check",
+      "contype": "c",
+      "definition": "CHECK (\"position\" > 0)"
+    },
+    {
+      "table_name": "assessment_test_cases",
+      "conname": "assessment_test_cases_weight_check",
+      "contype": "c",
+      "definition": "CHECK (weight > 0::numeric)"
+    },
+    {
+      "table_name": "assessments",
+      "conname": "assessments_course_weight_percent_check",
+      "contype": "c",
+      "definition": "CHECK (course_weight_percent >= 0::numeric AND course_weight_percent <= 100::numeric)"
+    },
+    {
+      "table_name": "assessments",
+      "conname": "assessments_diagnostic_zero",
+      "contype": "c",
+      "definition": "CHECK (type <> 'PRETEST'::assessment_type OR course_weight_percent = 0::numeric AND passing_score = 0::numeric)"
+    },
+    {
+      "table_name": "assessments",
+      "conname": "assessments_gate_after_chapter_check",
+      "contype": "c",
+      "definition": "CHECK (gate_after_chapter >= 1 AND gate_after_chapter <= 10)"
+    },
+    {
+      "table_name": "assessments",
+      "conname": "assessments_learning_path_id_fkey",
+      "contype": "f",
+      "definition": "FOREIGN KEY (learning_path_id) REFERENCES learning_paths(id) ON DELETE CASCADE"
+    },
+    {
+      "table_name": "assessments",
+      "conname": "assessments_learning_path_id_position_key",
+      "contype": "u",
+      "definition": "UNIQUE (learning_path_id, \"position\")"
+    },
+    {
+      "table_name": "assessments",
+      "conname": "assessments_learning_path_id_slug_key",
+      "contype": "u",
+      "definition": "UNIQUE (learning_path_id, slug)"
+    },
+    {
+      "table_name": "assessments",
+      "conname": "assessments_passing_score_check",
+      "contype": "c",
+      "definition": "CHECK (passing_score >= 0::numeric AND passing_score <= 100::numeric)"
+    },
+    {
+      "table_name": "assessments",
+      "conname": "assessments_pkey",
+      "contype": "p",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "assessments",
+      "conname": "assessments_position_check",
+      "contype": "c",
+      "definition": "CHECK (\"position\" > 0)"
+    },
+    {
+      "table_name": "assessments",
+      "conname": "assessments_pretest_retired",
+      "contype": "c",
+      "definition": "CHECK (type <> 'PRETEST'::assessment_type OR NOT is_published)"
+    },
+    {
+      "table_name": "assessments",
+      "conname": "assessments_slug_check",
+      "contype": "c",
+      "definition": "CHECK (slug ~ '^[a-z0-9]+(?:-[a-z0-9]+)*$'::text)"
+    },
+    {
+      "table_name": "chapters",
+      "conname": "chapters_learning_path_id_fkey",
+      "contype": "f",
+      "definition": "FOREIGN KEY (learning_path_id) REFERENCES learning_paths(id) ON DELETE CASCADE"
+    },
+    {
+      "table_name": "chapters",
+      "conname": "chapters_learning_path_id_position_key",
+      "contype": "u",
+      "definition": "UNIQUE (learning_path_id, \"position\")"
+    },
+    {
+      "table_name": "chapters",
+      "conname": "chapters_pkey",
+      "contype": "p",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "chapters",
+      "conname": "chapters_position_check",
+      "contype": "c",
+      "definition": "CHECK (\"position\" > 0)"
+    },
+    {
+      "table_name": "code_request_limits",
+      "conname": "code_request_limits_kind_check",
+      "contype": "c",
+      "definition": "CHECK (kind = ANY (ARRAY['check'::text, 'ai'::text, 'assessment'::text]))"
+    },
+    {
+      "table_name": "code_request_limits",
+      "conname": "code_request_limits_pkey",
+      "contype": "p",
+      "definition": "PRIMARY KEY (user_id, kind)"
+    },
+    {
+      "table_name": "code_request_limits",
+      "conname": "code_request_limits_request_count_check",
+      "contype": "c",
+      "definition": "CHECK (request_count > 0)"
+    },
+    {
+      "table_name": "code_request_limits",
+      "conname": "code_request_limits_user_id_fkey",
+      "contype": "f",
+      "definition": "FOREIGN KEY (user_id) REFERENCES auth.users(id) ON DELETE CASCADE"
+    },
+    {
+      "table_name": "exercise_attempts",
+      "conname": "attempt_source_size",
+      "contype": "c",
+      "definition": "CHECK (source_code IS NULL OR length(source_code) <= 16000)"
+    },
+    {
+      "table_name": "exercise_attempts",
+      "conname": "exercise_attempts_exercise_id_fkey",
+      "contype": "f",
+      "definition": "FOREIGN KEY (exercise_id) REFERENCES exercises(id) ON DELETE CASCADE"
+    },
+    {
+      "table_name": "exercise_attempts",
+      "conname": "exercise_attempts_pkey",
+      "contype": "p",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "exercise_attempts",
+      "conname": "exercise_attempts_score_check",
+      "contype": "c",
+      "definition": "CHECK (score >= 0::numeric AND score <= 100::numeric)"
+    },
+    {
+      "table_name": "exercise_attempts",
+      "conname": "exercise_attempts_user_id_fkey",
+      "contype": "f",
+      "definition": "FOREIGN KEY (user_id) REFERENCES auth.users(id) ON DELETE CASCADE"
+    },
+    {
+      "table_name": "exercises",
+      "conname": "exercise_config_object",
+      "contype": "c",
+      "definition": "CHECK (jsonb_typeof(config) = 'object'::text)"
+    },
+    {
+      "table_name": "exercises",
+      "conname": "exercises_lesson_id_fkey",
+      "contype": "f",
+      "definition": "FOREIGN KEY (lesson_id) REFERENCES lessons(id) ON DELETE CASCADE"
+    },
+    {
+      "table_name": "exercises",
+      "conname": "exercises_lesson_id_position_key",
+      "contype": "u",
+      "definition": "UNIQUE (lesson_id, \"position\")"
+    },
+    {
+      "table_name": "exercises",
+      "conname": "exercises_pkey",
+      "contype": "p",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "exercises",
+      "conname": "exercises_position_check",
+      "contype": "c",
+      "definition": "CHECK (\"position\" > 0)"
+    },
+    {
+      "table_name": "forum_replies",
+      "conname": "forum_replies_author_id_fkey",
+      "contype": "f",
+      "definition": "FOREIGN KEY (author_id) REFERENCES profiles(id) ON DELETE CASCADE"
+    },
+    {
+      "table_name": "forum_replies",
+      "conname": "forum_replies_body_check",
+      "contype": "c",
+      "definition": "CHECK (char_length(btrim(body)) >= 2 AND char_length(btrim(body)) <= 4000)"
+    },
+    {
+      "table_name": "forum_replies",
+      "conname": "forum_replies_pkey",
+      "contype": "p",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "forum_replies",
+      "conname": "forum_replies_topic_id_fkey",
+      "contype": "f",
+      "definition": "FOREIGN KEY (topic_id) REFERENCES forum_topics(id) ON DELETE CASCADE"
+    },
+    {
+      "table_name": "forum_topics",
+      "conname": "forum_topics_author_id_fkey",
+      "contype": "f",
+      "definition": "FOREIGN KEY (author_id) REFERENCES profiles(id) ON DELETE CASCADE"
+    },
+    {
+      "table_name": "forum_topics",
+      "conname": "forum_topics_body_check",
+      "contype": "c",
+      "definition": "CHECK (char_length(btrim(body)) >= 10 AND char_length(btrim(body)) <= 6000)"
+    },
+    {
+      "table_name": "forum_topics",
+      "conname": "forum_topics_category_check",
+      "contype": "c",
+      "definition": "CHECK (category = ANY (ARRAY['DATABASE'::text, 'GENERAL'::text]))"
+    },
+    {
+      "table_name": "forum_topics",
+      "conname": "forum_topics_pkey",
+      "contype": "p",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "forum_topics",
+      "conname": "forum_topics_title_check",
+      "contype": "c",
+      "definition": "CHECK (char_length(btrim(title)) >= 6 AND char_length(btrim(title)) <= 140)"
+    },
+    {
+      "table_name": "learning_paths",
+      "conname": "learning_paths_pkey",
+      "contype": "p",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "learning_paths",
+      "conname": "learning_paths_slug_format",
+      "contype": "c",
+      "definition": "CHECK (slug ~ '^[a-z0-9]+(?:-[a-z0-9]+)*$'::text)"
+    },
+    {
+      "table_name": "learning_paths",
+      "conname": "learning_paths_slug_key",
+      "contype": "u",
+      "definition": "UNIQUE (slug)"
+    },
+    {
+      "table_name": "lesson_progress",
+      "conname": "completed_progress_has_timestamp",
+      "contype": "c",
+      "definition": "CHECK (status = 'COMPLETED'::lesson_progress_status AND completed_at IS NOT NULL OR status = 'IN_PROGRESS'::lesson_progress_status AND completed_at IS NULL)"
+    },
+    {
+      "table_name": "lesson_progress",
+      "conname": "lesson_progress_lesson_id_fkey",
+      "contype": "f",
+      "definition": "FOREIGN KEY (lesson_id) REFERENCES lessons(id) ON DELETE CASCADE"
+    },
+    {
+      "table_name": "lesson_progress",
+      "conname": "lesson_progress_pkey",
+      "contype": "p",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "lesson_progress",
+      "conname": "lesson_progress_user_id_fkey",
+      "contype": "f",
+      "definition": "FOREIGN KEY (user_id) REFERENCES auth.users(id) ON DELETE CASCADE"
+    },
+    {
+      "table_name": "lesson_progress",
+      "conname": "lesson_progress_user_id_lesson_id_key",
+      "contype": "u",
+      "definition": "UNIQUE (user_id, lesson_id)"
+    },
+    {
+      "table_name": "lesson_progress",
+      "conname": "persisted_progress_status",
+      "contype": "c",
+      "definition": "CHECK (status = ANY (ARRAY['IN_PROGRESS'::lesson_progress_status, 'COMPLETED'::lesson_progress_status]))"
+    },
+    {
+      "table_name": "lessons",
+      "conname": "lessons_chapter_id_fkey",
+      "contype": "f",
+      "definition": "FOREIGN KEY (chapter_id) REFERENCES chapters(id) ON DELETE CASCADE"
+    },
+    {
+      "table_name": "lessons",
+      "conname": "lessons_chapter_id_position_key",
+      "contype": "u",
+      "definition": "UNIQUE (chapter_id, \"position\")"
+    },
+    {
+      "table_name": "lessons",
+      "conname": "lessons_example_sql_length_check",
+      "contype": "c",
+      "definition": "CHECK (example_sql IS NULL OR length(example_sql) <= 4096)"
+    },
+    {
+      "table_name": "lessons",
+      "conname": "lessons_pkey",
+      "contype": "p",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "lessons",
+      "conname": "lessons_position_check",
+      "contype": "c",
+      "definition": "CHECK (\"position\" > 0)"
+    },
+    {
+      "table_name": "lessons",
+      "conname": "lessons_slug_format",
+      "contype": "c",
+      "definition": "CHECK (slug ~ '^[a-z0-9]+(?:-[a-z0-9]+)*$'::text)"
+    },
+    {
+      "table_name": "lessons",
+      "conname": "lessons_slug_key",
+      "contype": "u",
+      "definition": "UNIQUE (slug)"
+    },
+    {
+      "table_name": "profiles",
+      "conname": "profiles_id_fkey",
+      "contype": "f",
+      "definition": "FOREIGN KEY (id) REFERENCES auth.users(id) ON DELETE CASCADE"
+    },
+    {
+      "table_name": "profiles",
+      "conname": "profiles_pkey",
+      "contype": "p",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "test_cases",
+      "conname": "test_cases_exercise_id_fkey",
+      "contype": "f",
+      "definition": "FOREIGN KEY (exercise_id) REFERENCES exercises(id) ON DELETE CASCADE"
+    },
+    {
+      "table_name": "test_cases",
+      "conname": "test_cases_exercise_id_position_key",
+      "contype": "u",
+      "definition": "UNIQUE (exercise_id, \"position\")"
+    },
+    {
+      "table_name": "test_cases",
+      "conname": "test_cases_pkey",
+      "contype": "p",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "test_cases",
+      "conname": "test_cases_position_check",
+      "contype": "c",
+      "definition": "CHECK (\"position\" > 0)"
+    },
+    {
+      "table_name": "test_cases",
+      "conname": "test_cases_weight_check",
+      "contype": "c",
+      "definition": "CHECK (weight > 0::numeric)"
+    }
+  ],
+  "indexes": [
+    {
+      "tablename": "ai_messages",
+      "indexname": "ai_messages_pkey",
+      "indexdef": "CREATE UNIQUE INDEX ai_messages_pkey ON public.ai_messages USING btree (id)"
+    },
+    {
+      "tablename": "ai_messages",
+      "indexname": "ai_messages_session_recent_idx",
+      "indexdef": "CREATE INDEX ai_messages_session_recent_idx ON public.ai_messages USING btree (session_id, created_at DESC)"
+    },
+    {
+      "tablename": "ai_sessions",
+      "indexname": "ai_sessions_pkey",
+      "indexdef": "CREATE UNIQUE INDEX ai_sessions_pkey ON public.ai_sessions USING btree (id)"
+    },
+    {
+      "tablename": "ai_sessions",
+      "indexname": "ai_sessions_user_recent_idx",
+      "indexdef": "CREATE INDEX ai_sessions_user_recent_idx ON public.ai_sessions USING btree (user_id, updated_at DESC)"
+    },
+    {
+      "tablename": "assessment_items",
+      "indexname": "assessment_items_assessment_id_position_key",
+      "indexdef": "CREATE UNIQUE INDEX assessment_items_assessment_id_position_key ON public.assessment_items USING btree (assessment_id, \"position\")"
+    },
+    {
+      "tablename": "assessment_items",
+      "indexname": "assessment_items_order_idx",
+      "indexdef": "CREATE INDEX assessment_items_order_idx ON public.assessment_items USING btree (assessment_id, \"position\")"
+    },
+    {
+      "tablename": "assessment_items",
+      "indexname": "assessment_items_pkey",
+      "indexdef": "CREATE UNIQUE INDEX assessment_items_pkey ON public.assessment_items USING btree (id)"
+    },
+    {
+      "tablename": "assessment_results",
+      "indexname": "assessment_results_pkey",
+      "indexdef": "CREATE UNIQUE INDEX assessment_results_pkey ON public.assessment_results USING btree (id)"
+    },
+    {
+      "tablename": "assessment_results",
+      "indexname": "assessment_results_user_id_assessment_id_key",
+      "indexdef": "CREATE UNIQUE INDEX assessment_results_user_id_assessment_id_key ON public.assessment_results USING btree (user_id, assessment_id)"
+    },
+    {
+      "tablename": "assessment_results",
+      "indexname": "assessment_results_user_idx",
+      "indexdef": "CREATE INDEX assessment_results_user_idx ON public.assessment_results USING btree (user_id, assessment_id) WHERE passed"
+    },
+    {
+      "tablename": "assessment_sessions",
+      "indexname": "assessment_sessions_one_active_idx",
+      "indexdef": "CREATE UNIQUE INDEX assessment_sessions_one_active_idx ON public.assessment_sessions USING btree (user_id, assessment_id) WHERE (status = 'IN_PROGRESS'::text)"
+    },
+    {
+      "tablename": "assessment_sessions",
+      "indexname": "assessment_sessions_one_active_user_idx",
+      "indexdef": "CREATE UNIQUE INDEX assessment_sessions_one_active_user_idx ON public.assessment_sessions USING btree (user_id) WHERE (status = 'IN_PROGRESS'::text)"
+    },
+    {
+      "tablename": "assessment_sessions",
+      "indexname": "assessment_sessions_pkey",
+      "indexdef": "CREATE UNIQUE INDEX assessment_sessions_pkey ON public.assessment_sessions USING btree (id)"
+    },
+    {
+      "tablename": "assessment_sessions",
+      "indexname": "assessment_sessions_user_idx",
+      "indexdef": "CREATE INDEX assessment_sessions_user_idx ON public.assessment_sessions USING btree (user_id, assessment_id, started_at DESC)"
+    },
+    {
+      "tablename": "assessment_test_cases",
+      "indexname": "assessment_test_cases_assessment_item_id_position_key",
+      "indexdef": "CREATE UNIQUE INDEX assessment_test_cases_assessment_item_id_position_key ON public.assessment_test_cases USING btree (assessment_item_id, \"position\")"
+    },
+    {
+      "tablename": "assessment_test_cases",
+      "indexname": "assessment_test_cases_item_hidden_idx",
+      "indexdef": "CREATE INDEX assessment_test_cases_item_hidden_idx ON public.assessment_test_cases USING btree (assessment_item_id, is_hidden, \"position\")"
+    },
+    {
+      "tablename": "assessment_test_cases",
+      "indexname": "assessment_test_cases_pkey",
+      "indexdef": "CREATE UNIQUE INDEX assessment_test_cases_pkey ON public.assessment_test_cases USING btree (id)"
+    },
+    {
+      "tablename": "assessments",
+      "indexname": "assessments_learning_path_id_position_key",
+      "indexdef": "CREATE UNIQUE INDEX assessments_learning_path_id_position_key ON public.assessments USING btree (learning_path_id, \"position\")"
+    },
+    {
+      "tablename": "assessments",
+      "indexname": "assessments_learning_path_id_slug_key",
+      "indexdef": "CREATE UNIQUE INDEX assessments_learning_path_id_slug_key ON public.assessments USING btree (learning_path_id, slug)"
+    },
+    {
+      "tablename": "assessments",
+      "indexname": "assessments_pkey",
+      "indexdef": "CREATE UNIQUE INDEX assessments_pkey ON public.assessments USING btree (id)"
+    },
+    {
+      "tablename": "assessments",
+      "indexname": "assessments_published_path_idx",
+      "indexdef": "CREATE INDEX assessments_published_path_idx ON public.assessments USING btree (learning_path_id, \"position\") WHERE is_published"
+    },
+    {
+      "tablename": "chapters",
+      "indexname": "chapters_learning_path_id_position_key",
+      "indexdef": "CREATE UNIQUE INDEX chapters_learning_path_id_position_key ON public.chapters USING btree (learning_path_id, \"position\")"
+    },
+    {
+      "tablename": "chapters",
+      "indexname": "chapters_pkey",
+      "indexdef": "CREATE UNIQUE INDEX chapters_pkey ON public.chapters USING btree (id)"
+    },
+    {
+      "tablename": "chapters",
+      "indexname": "chapters_published_path_idx",
+      "indexdef": "CREATE INDEX chapters_published_path_idx ON public.chapters USING btree (learning_path_id, \"position\") WHERE is_published"
+    },
+    {
+      "tablename": "code_request_limits",
+      "indexname": "code_request_limits_pkey",
+      "indexdef": "CREATE UNIQUE INDEX code_request_limits_pkey ON public.code_request_limits USING btree (user_id, kind)"
+    },
+    {
+      "tablename": "exercise_attempts",
+      "indexname": "exercise_attempts_exercise_idx",
+      "indexdef": "CREATE INDEX exercise_attempts_exercise_idx ON public.exercise_attempts USING btree (exercise_id)"
+    },
+    {
+      "tablename": "exercise_attempts",
+      "indexname": "exercise_attempts_pkey",
+      "indexdef": "CREATE UNIQUE INDEX exercise_attempts_pkey ON public.exercise_attempts USING btree (id)"
+    },
+    {
+      "tablename": "exercise_attempts",
+      "indexname": "exercise_attempts_user_exercise_idx",
+      "indexdef": "CREATE INDEX exercise_attempts_user_exercise_idx ON public.exercise_attempts USING btree (user_id, exercise_id, created_at DESC)"
+    },
+    {
+      "tablename": "exercises",
+      "indexname": "exercises_lesson_id_position_key",
+      "indexdef": "CREATE UNIQUE INDEX exercises_lesson_id_position_key ON public.exercises USING btree (lesson_id, \"position\")"
+    },
+    {
+      "tablename": "exercises",
+      "indexname": "exercises_pkey",
+      "indexdef": "CREATE UNIQUE INDEX exercises_pkey ON public.exercises USING btree (id)"
+    },
+    {
+      "tablename": "exercises",
+      "indexname": "exercises_published_lesson_idx",
+      "indexdef": "CREATE INDEX exercises_published_lesson_idx ON public.exercises USING btree (lesson_id, \"position\") WHERE is_published"
+    },
+    {
+      "tablename": "forum_replies",
+      "indexname": "forum_replies_author_quota_idx",
+      "indexdef": "CREATE INDEX forum_replies_author_quota_idx ON public.forum_replies USING btree (author_id, created_at DESC)"
+    },
+    {
+      "tablename": "forum_replies",
+      "indexname": "forum_replies_pkey",
+      "indexdef": "CREATE UNIQUE INDEX forum_replies_pkey ON public.forum_replies USING btree (id)"
+    },
+    {
+      "tablename": "forum_replies",
+      "indexname": "forum_replies_topic_order_idx",
+      "indexdef": "CREATE INDEX forum_replies_topic_order_idx ON public.forum_replies USING btree (topic_id, created_at, id)"
+    },
+    {
+      "tablename": "forum_topics",
+      "indexname": "forum_topics_author_quota_idx",
+      "indexdef": "CREATE INDEX forum_topics_author_quota_idx ON public.forum_topics USING btree (author_id, created_at DESC)"
+    },
+    {
+      "tablename": "forum_topics",
+      "indexname": "forum_topics_feed_idx",
+      "indexdef": "CREATE INDEX forum_topics_feed_idx ON public.forum_topics USING btree (created_at DESC, id DESC) WHERE (NOT is_hidden)"
+    },
+    {
+      "tablename": "forum_topics",
+      "indexname": "forum_topics_pkey",
+      "indexdef": "CREATE UNIQUE INDEX forum_topics_pkey ON public.forum_topics USING btree (id)"
+    },
+    {
+      "tablename": "learning_paths",
+      "indexname": "learning_paths_pkey",
+      "indexdef": "CREATE UNIQUE INDEX learning_paths_pkey ON public.learning_paths USING btree (id)"
+    },
+    {
+      "tablename": "learning_paths",
+      "indexname": "learning_paths_position_idx",
+      "indexdef": "CREATE INDEX learning_paths_position_idx ON public.learning_paths USING btree (\"position\", slug)"
+    },
+    {
+      "tablename": "learning_paths",
+      "indexname": "learning_paths_published_idx",
+      "indexdef": "CREATE INDEX learning_paths_published_idx ON public.learning_paths USING btree (is_published, slug)"
+    },
+    {
+      "tablename": "learning_paths",
+      "indexname": "learning_paths_slug_key",
+      "indexdef": "CREATE UNIQUE INDEX learning_paths_slug_key ON public.learning_paths USING btree (slug)"
+    },
+    {
+      "tablename": "lesson_progress",
+      "indexname": "lesson_progress_lesson_idx",
+      "indexdef": "CREATE INDEX lesson_progress_lesson_idx ON public.lesson_progress USING btree (lesson_id)"
+    },
+    {
+      "tablename": "lesson_progress",
+      "indexname": "lesson_progress_pkey",
+      "indexdef": "CREATE UNIQUE INDEX lesson_progress_pkey ON public.lesson_progress USING btree (id)"
+    },
+    {
+      "tablename": "lesson_progress",
+      "indexname": "lesson_progress_user_id_lesson_id_key",
+      "indexdef": "CREATE UNIQUE INDEX lesson_progress_user_id_lesson_id_key ON public.lesson_progress USING btree (user_id, lesson_id)"
+    },
+    {
+      "tablename": "lesson_progress",
+      "indexname": "lesson_progress_user_status_idx",
+      "indexdef": "CREATE INDEX lesson_progress_user_status_idx ON public.lesson_progress USING btree (user_id, status)"
+    },
+    {
+      "tablename": "lessons",
+      "indexname": "lessons_chapter_id_position_key",
+      "indexdef": "CREATE UNIQUE INDEX lessons_chapter_id_position_key ON public.lessons USING btree (chapter_id, \"position\")"
+    },
+    {
+      "tablename": "lessons",
+      "indexname": "lessons_pkey",
+      "indexdef": "CREATE UNIQUE INDEX lessons_pkey ON public.lessons USING btree (id)"
+    },
+    {
+      "tablename": "lessons",
+      "indexname": "lessons_published_chapter_idx",
+      "indexdef": "CREATE INDEX lessons_published_chapter_idx ON public.lessons USING btree (chapter_id, \"position\") WHERE is_published"
+    },
+    {
+      "tablename": "lessons",
+      "indexname": "lessons_slug_key",
+      "indexdef": "CREATE UNIQUE INDEX lessons_slug_key ON public.lessons USING btree (slug)"
+    },
+    {
+      "tablename": "profiles",
+      "indexname": "profiles_pkey",
+      "indexdef": "CREATE UNIQUE INDEX profiles_pkey ON public.profiles USING btree (id)"
+    },
+    {
+      "tablename": "profiles",
+      "indexname": "profiles_role_idx",
+      "indexdef": "CREATE INDEX profiles_role_idx ON public.profiles USING btree (role)"
+    },
+    {
+      "tablename": "test_cases",
+      "indexname": "test_cases_exercise_hidden_idx",
+      "indexdef": "CREATE INDEX test_cases_exercise_hidden_idx ON public.test_cases USING btree (exercise_id, is_hidden, \"position\")"
+    },
+    {
+      "tablename": "test_cases",
+      "indexname": "test_cases_exercise_id_position_key",
+      "indexdef": "CREATE UNIQUE INDEX test_cases_exercise_id_position_key ON public.test_cases USING btree (exercise_id, \"position\")"
+    },
+    {
+      "tablename": "test_cases",
+      "indexname": "test_cases_pkey",
+      "indexdef": "CREATE UNIQUE INDEX test_cases_pkey ON public.test_cases USING btree (id)"
+    }
+  ],
+  "triggers": [
+    {
+      "schema_name": "auth",
+      "table_name": "users",
+      "trigger_name": "on_auth_user_created",
+      "definition": "CREATE TRIGGER on_auth_user_created AFTER INSERT ON auth.users FOR EACH ROW EXECUTE FUNCTION handle_new_user()"
+    },
+    {
+      "schema_name": "public",
+      "table_name": "chapters",
+      "trigger_name": "chapters_updated_at",
+      "definition": "CREATE TRIGGER chapters_updated_at BEFORE UPDATE ON chapters FOR EACH ROW EXECUTE FUNCTION set_profile_updated_at()"
+    },
+    {
+      "schema_name": "public",
+      "table_name": "exercises",
+      "trigger_name": "exercises_updated_at",
+      "definition": "CREATE TRIGGER exercises_updated_at BEFORE UPDATE ON exercises FOR EACH ROW EXECUTE FUNCTION set_profile_updated_at()"
+    },
+    {
+      "schema_name": "public",
+      "table_name": "learning_paths",
+      "trigger_name": "learning_paths_updated_at",
+      "definition": "CREATE TRIGGER learning_paths_updated_at BEFORE UPDATE ON learning_paths FOR EACH ROW EXECUTE FUNCTION set_profile_updated_at()"
+    },
+    {
+      "schema_name": "public",
+      "table_name": "lessons",
+      "trigger_name": "lessons_updated_at",
+      "definition": "CREATE TRIGGER lessons_updated_at BEFORE UPDATE ON lessons FOR EACH ROW EXECUTE FUNCTION set_profile_updated_at()"
+    },
+    {
+      "schema_name": "public",
+      "table_name": "profiles",
+      "trigger_name": "profiles_updated_at",
+      "definition": "CREATE TRIGGER profiles_updated_at BEFORE UPDATE ON profiles FOR EACH ROW EXECUTE FUNCTION set_profile_updated_at()"
+    }
+  ],
+  "storage_buckets": [],
+  "edge_functions": [],
+  "content_counts": [
+    {
+      "table_name": "learning_paths",
+      "total": 4,
+      "published": 1
+    },
+    {
+      "table_name": "chapters",
+      "total": 22,
+      "published": 3
+    },
+    {
+      "table_name": "lessons",
+      "total": 29,
+      "published": 11
+    },
+    {
+      "table_name": "exercises",
+      "total": 67,
+      "published": 45
+    },
+    {
+      "table_name": "assessments",
+      "total": 16,
+      "published": 1
+    }
+  ],
+  "security_advisors": {
+    "lints": [
+      {
+        "name": "rls_enabled_no_policy",
+        "title": "RLS Enabled No Policy",
+        "level": "INFO",
+        "facing": "EXTERNAL",
+        "categories": [
+          "SECURITY"
+        ],
+        "description": "Detects cases where row level security (RLS) has been enabled on a table but no RLS policies have been created.",
+        "remediation": "https://supabase.com/docs/guides/database/database-linter?lint=0008_rls_enabled_no_policy",
+        "count": 4,
+        "findings": [
+          {
+            "detail": "Table \\`public.assessment_items\\` has RLS enabled, but no policies exist",
+            "metadata": {
+              "name": "assessment_items",
+              "type": "table",
+              "schema": "public"
+            },
+            "observed_at": "2026-11-02T13:15:36.588Z"
+          },
+          {
+            "detail": "Table \\`public.assessment_test_cases\\` has RLS enabled, but no policies exist",
+            "metadata": {
+              "name": "assessment_test_cases",
+              "type": "table",
+              "schema": "public"
+            },
+            "observed_at": "2026-11-02T13:15:36.588Z"
+          },
+          {
+            "detail": "Table \\`public.assessments\\` has RLS enabled, but no policies exist",
+            "metadata": {
+              "name": "assessments",
+              "type": "table",
+              "schema": "public"
+            },
+            "observed_at": "2026-11-02T13:15:36.588Z"
+          },
+          {
+            "detail": "Table \\`public.code_request_limits\\` has RLS enabled, but no policies exist",
+            "metadata": {
+              "name": "code_request_limits",
+              "type": "table",
+              "schema": "public"
+            },
+            "observed_at": "2026-11-02T13:15:36.588Z"
+          }
+        ]
+      },
+      {
+        "name": "authenticated_security_definer_function_executable",
+        "title": "Signed-In Users Can Execute SECURITY DEFINER Function",
+        "level": "WARN",
+        "facing": "EXTERNAL",
+        "categories": [
+          "SECURITY"
+        ],
+        "description": "Detects `SECURITY DEFINER` functions that are callable by signed-in users. Revoke `EXECUTE`, switch the function to `SECURITY INVOKER`, or move it out of your exposed API schema if signed-in users should not call it.",
+        "remediation": "https://supabase.com/docs/guides/database/database-linter?lint=0029_authenticated_security_definer_function_executable",
+        "count": 6,
+        "findings": [
+          {
+            "detail": "Function `public.acknowledge_material_read(p_lesson_id uuid)` can be executed by the `authenticated` role as a `SECURITY DEFINER` function via `/rest/v1/rpc/acknowledge_material_read`. Revoke `EXECUTE` or switch it to `SECURITY INVOKER` if that is not intentional.",
+            "metadata": {
+              "name": "acknowledge_material_read",
+              "schema": "public",
+              "language": "plpgsql",
+              "arguments": "p_lesson_id uuid",
+              "security_definer": true
+            },
+            "observed_at": "2026-11-02T13:15:36.588Z"
+          },
+          {
+            "detail": "Function `public.consume_code_request_quota(p_kind text)` can be executed by the `authenticated` role as a `SECURITY DEFINER` function via `/rest/v1/rpc/consume_code_request_quota`. Revoke `EXECUTE` or switch it to `SECURITY INVOKER` if that is not intentional.",
+            "metadata": {
+              "name": "consume_code_request_quota",
+              "schema": "public",
+              "language": "plpgsql",
+              "arguments": "p_kind text",
+              "security_definer": true
+            },
+            "observed_at": "2026-11-02T13:15:36.588Z"
+          },
+          {
+            "detail": "Function `public.current_user_has_active_assessment()` can be executed by the `authenticated` role as a `SECURITY DEFINER` function via `/rest/v1/rpc/current_user_has_active_assessment`. Revoke `EXECUTE` or switch it to `SECURITY INVOKER` if that is not intentional.",
+            "metadata": {
+              "name": "current_user_has_active_assessment",
+              "schema": "public",
+              "language": "plpgsql",
+              "arguments": "",
+              "security_definer": true
+            },
+            "observed_at": "2026-11-02T13:15:36.588Z"
+          },
+          {
+            "detail": "Function `public.current_user_lesson_available(p_lesson_id uuid)` can be executed by the `authenticated` role as a `SECURITY DEFINER` function via `/rest/v1/rpc/current_user_lesson_available`. Revoke `EXECUTE` or switch it to `SECURITY INVOKER` if that is not intentional.",
+            "metadata": {
+              "name": "current_user_lesson_available",
+              "schema": "public",
+              "language": "sql",
+              "arguments": "p_lesson_id uuid",
+              "security_definer": true
+            },
+            "observed_at": "2026-11-02T13:15:36.588Z"
+          },
+          {
+            "detail": "Function `public.phase1_start_lesson(p_lesson_id uuid)` can be executed by the `authenticated` role as a `SECURITY DEFINER` function via `/rest/v1/rpc/phase1_start_lesson`. Revoke `EXECUTE` or switch it to `SECURITY INVOKER` if that is not intentional.",
+            "metadata": {
+              "name": "phase1_start_lesson",
+              "schema": "public",
+              "language": "plpgsql",
+              "arguments": "p_lesson_id uuid",
+              "security_definer": true
+            },
+            "observed_at": "2026-11-02T13:15:36.588Z"
+          },
+          {
+            "detail": "Function `public.start_assessment_session(p_assessment_id uuid)` can be executed by the `authenticated` role as a `SECURITY DEFINER` function via `/rest/v1/rpc/start_assessment_session`. Revoke `EXECUTE` or switch it to `SECURITY INVOKER` if that is not intentional.",
+            "metadata": {
+              "name": "start_assessment_session",
+              "schema": "public",
+              "language": "plpgsql",
+              "arguments": "p_assessment_id uuid",
+              "security_definer": true
+            },
+            "observed_at": "2026-11-02T13:15:36.588Z"
+          }
+        ]
+      },
+      {
+        "name": "auth_leaked_password_protection",
+        "title": "Leaked Password Protection Disabled",
+        "level": "WARN",
+        "facing": "EXTERNAL",
+        "categories": [
+          "SECURITY"
+        ],
+        "description": "Leaked password protection is currently disabled.",
+        "remediation": "https://supabase.com/docs/guides/auth/password-security#password-strength-and-leaked-password-protection",
+        "count": 1,
+        "findings": [
+          {
+            "detail": "Supabase Auth prevents the use of compromised passwords by checking against HaveIBeenPwned.org. Enable this feature to enhance security.",
+            "metadata": {
+              "type": "auth",
+              "entity": "Auth"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "limits": [
+    "No authenticated student/teacher application sessions tested",
+    "Auth email confirmation and redirect settings not inspected",
+    "Published material content itself not audited",
+    "PostgREST exposed schema setting not established by current_setting"
+  ]
+}

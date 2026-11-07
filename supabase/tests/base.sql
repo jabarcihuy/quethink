@@ -1,0 +1,25 @@
+-- Minimal audited pre-mobile schema, for delta tests only. No production seed.
+create role anon nologin;
+create role authenticated nologin;
+create schema auth;
+create schema storage;
+create function auth.uid() returns uuid language sql stable as $$ select nullif(current_setting('request.jwt.claim.sub',true),'')::uuid; $$;
+grant usage on schema auth,storage to anon,authenticated;
+grant execute on function auth.uid() to anon,authenticated;
+create table auth.users(id uuid primary key,raw_user_meta_data jsonb default '{}');
+create type public.app_role as enum('USER','ADMIN');
+create table public.profiles(id uuid primary key references auth.users(id) on delete cascade,role public.app_role not null default 'USER',display_name text,created_at timestamptz default now(),updated_at timestamptz default now());
+alter table public.profiles enable row level security;
+grant all on public.profiles to anon,authenticated;
+create policy "Users read own profile" on public.profiles for select to authenticated using(id=(select auth.uid()));
+create function public.handle_new_user() returns trigger language plpgsql security definer set search_path='' as $$ begin insert into public.profiles(id,role) values(new.id,'USER'); return new; end; $$;
+create trigger on_auth_user_created after insert on auth.users for each row execute function public.handle_new_user();
+create table public.learning_paths(id uuid primary key default gen_random_uuid(),title text,position int default 1,is_published boolean default false);
+create table storage.buckets(id text primary key,name text,public boolean,file_size_limit bigint,allowed_mime_types text[]);
+create table storage.objects(id uuid primary key default gen_random_uuid(),bucket_id text references storage.buckets(id),name text);
+alter table storage.objects enable row level security;
+grant select,insert,update,delete on storage.objects to authenticated;
+create role service_role nologin bypassrls;
+create table public.chapters(id uuid primary key default gen_random_uuid(),learning_path_id uuid references public.learning_paths(id),title text,position int,is_published boolean default false);
+create table public.lessons(id uuid primary key default gen_random_uuid(),chapter_id uuid references public.chapters(id),title text,content text,position int,is_published boolean default false);
+create table public.exercises(id uuid primary key default gen_random_uuid(),lesson_id uuid references public.lessons(id),is_published boolean default false,is_required boolean default false);

@@ -1,0 +1,50 @@
+{
+  "expo": {
+    "name": "Quethink",
+    "slug": "quethink-mobile",
+    "scheme": "quethink",
+    "version": "0.1.0",
+    "platforms": [
+      "android"
+    ],
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "icon": "./assets/icon.png",
+    "android": {
+      "package": "com.quethink.mobile",
+      "predictiveBackGestureEnabled": true,
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#5145CD"
+      },
+      "softwareKeyboardLayoutMode": "resize"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-system-ui",
+      "expo-secure-store",
+      "expo-image",
+      [
+        "expo-image-picker",
+        {
+          "cameraPermission": "Scan attendance QR codes.",
+          "microphonePermission": false,
+          "photosPermission": "Select your Quethink profile photo."
+        }
+      ],
+      "./plugins/with-tab-icons",
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Scan attendance QR codes.",
+          "microphonePermission": false,
+          "recordAudioAndroid": false,
+          "barcodeScannerEnabled": true
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}
