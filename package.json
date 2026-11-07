@@ -42,7 +42,7 @@
     "@sqlite.org/sqlite-wasm": "3.54.1-build1",
     "@types/node": "^24.19.2",
     "@types/react": "~19.3.0",
-    "eslint": "^9.39.5",
+    "eslint": "^10.14.0",
     "eslint-config-expo": "~58.0.4",
     "tsx": "^4.23.15",
     "typescript": "~6.0.3"
